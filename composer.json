@@ -1,0 +1,11 @@
+{
+    "name": "root/wordpress",
+    "autoload": {
+        "psr-4": {
+            "Root\\Wordpress\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/database": "^11.41"
+    }
+}
