@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 /**
  * The base configuration for WordPress
  *
@@ -18,6 +19,10 @@
  * @package WordPress
  */
 
+
+
+ use Illuminate\Database\Capsule\Manager as Capsule;
+
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'momotaro_wp' );
@@ -36,6 +41,21 @@ define( 'DB_CHARSET', 'utf8' );
 
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
+
+$capsule = new Capsule;
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => DB_HOST,
+    'database'  => DB_NAME,
+    'username'  => DB_USER,
+    'password'  => DB_PASSWORD,
+    'charset'   => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    'prefix'    => '',
+]);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
 /**#@+
  * Authentication unique keys and salts.
@@ -86,6 +106,16 @@ $table_prefix = 'wp_';
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
 define( 'WP_DEBUG', false );
+define('WP_HOME', getenv('WP_HOME'));  // ローカルのサイトURL
+define('WP_SITEURL', getenv('WP_HOME'));  // ローカルのサイトURL
+
+
+
+define('S3_UPLOADS_BUCKET', getenv('S3_UPLOADS_BUCKET'));
+define('S3_UPLOADS_REGION', getenv('S3_UPLOADS_REGION'));
+define('S3_UPLOADS_KEY', getenv('S3_UPLOADS_KEY'));
+define('S3_UPLOADS_SECRET', getenv('S3_UPLOADS_SECRET'));
+define('S3_UPLOADS_USE_INSTANCE_PROFILE', getenv('S3_UPLOADS_USE_INSTANCE_PROFILE'));
 
 /* Add any custom values between this line and the "stop editing" line. */
 

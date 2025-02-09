@@ -5,6 +5,8 @@
  * @package WordPress
  */
 
+use Aws\S3\S3Client;
+
 require ABSPATH . WPINC . '/option.php';
 
 /**

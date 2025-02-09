@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  wordpress:
+    build: .
+    container_name: wordpress_app
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - .:/var/www/html
