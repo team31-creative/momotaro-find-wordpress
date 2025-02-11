@@ -22,4 +22,5 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
   },
+  base: '/wp-content/themes/team31-theme/js/'
 });
