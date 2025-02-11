@@ -53,6 +53,10 @@ function mysql2date( $format, $date, $translate = true ) {
 	return $datetime->format( $format );
 }
 
+add_filter('auth0_login_redirect_url', function($redirect_url) {
+    return wp_login_url(); // ログイン後に wp-login.php にリダイレクト
+});
+
 /**
  * Retrieves the current time based on specified type.
  *
@@ -149,6 +153,70 @@ function wp_timezone_string() {
 function wp_timezone() {
 	return new DateTimeZone( wp_timezone_string() );
 }
+
+function remove_sidebar_for_non_admin_users() {
+    // 管理者権限以外のユーザーがサイドバーを表示しないように設定
+    if ( !current_user_can('administrator') ) {
+        // サイドバーに表示されるメニューを非表示にする
+        remove_menu_page('index.php'); // ダッシュボード
+        remove_menu_page('edit.php'); // 投稿
+        remove_menu_page('upload.php'); // メディア
+        remove_menu_page('edit.php?post_type=page'); // 固定ページ
+        remove_menu_page('edit-comments.php'); // コメント
+        remove_menu_page('themes.php'); // 外観
+        remove_menu_page('plugins.php'); // プラグイン
+        remove_menu_page('users.php'); // ユーザー
+        remove_menu_page('tools.php'); // ツール
+        remove_menu_page('options-general.php'); // 設定
+    }
+}
+add_action('admin_menu', 'remove_sidebar_for_non_admin_users', 999);
+
+function restrict_non_admin_to_profile_only() {
+    // 管理画面かつログインしているユーザーが管理者でない場合
+    if ( is_admin() && !current_user_can('administrator') ) {
+        // プロフィールページ以外にアクセスしようとした場合
+        if ( basename($_SERVER['PHP_SELF']) != 'profile.php' ) {
+            wp_redirect( home_url() ); // ホームページにリダイレクト
+            exit;
+        }
+    }
+}
+add_action('admin_init', 'restrict_non_admin_to_profile_only');
+
+function redirect_non_logged_in_users_to_login() {
+    // 管理画面にアクセスしようとした場合
+    if ( is_admin() && !is_user_logged_in() ) {
+        wp_redirect( wp_login_url() ); // ログインページにリダイレクト
+        exit;
+    }
+}
+add_action('admin_init', 'redirect_non_logged_in_users_to_login');
+
+function disable_admin_bar_on_frontend() {
+    if ( !current_user_can('administrator') && !is_admin() ) {
+        add_filter('show_admin_bar', '__return_false');
+    }
+}
+add_action('after_setup_theme', 'disable_admin_bar_on_frontend');
+
+function redirect_to_login_if_not_logged_in() {
+    // ユーザーがログインしていない場合
+    if ( !is_user_logged_in() && is_admin() ) {
+        wp_redirect(wp_login_url() . '?login=required'); // ログインページにリダイレクト
+        exit;
+    }
+}
+add_action('admin_init', 'redirect_to_login_if_not_logged_in');
+
+function redirect_to_login_on_frontend_if_not_logged_in() {
+    // ユーザーがログインしていない場合かつ管理画面でない場合
+    if ( !is_user_logged_in() && !is_admin() ) {
+        wp_redirect(wp_login_url()); // ログインページにリダイレクト
+        exit;
+    }
+}
+add_action('template_redirect', 'redirect_to_login_on_frontend_if_not_logged_in');
 
 /**
  * Retrieves the date in localized format, based on a sum of Unix timestamp and
@@ -317,6 +385,30 @@ function wp_date( $format, $timestamp = null, $timezone = null ) {
 
 	return $date;
 }
+
+function remove_profile_fields_for_non_admins($user) {
+    // 管理者以外のユーザーの場合
+    if ( !current_user_can('administrator') ) {
+        // プロフィールページでの各設定項目を削除
+		?>
+        <style>
+			form h2:first-of-type {
+    			display: none;
+			}
+
+            .user-rich-editing-wrap, 
+			.user-admin-color-wrap,
+			.user-comment-shortcuts-wrap,
+			.user-admin-bar-front-wrap,
+			.user-language-wrap {
+				display: none;
+			}
+        </style>
+        <?php
+    }
+}
+add_action('show_user_profile', 'remove_profile_fields_for_non_admins');
+add_action('edit_user_profile', 'remove_profile_fields_for_non_admins');
 
 /**
  * Determines if the date should be declined.

@@ -3,10 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@linaria/core": "^6.2.0",
+    "@linaria/react": "^6.2.1",
+    "@mui/material": "^6.4.3",
     "cra-template-typescript": "1.2.0",
+    "linaria": "^6.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^7.1.5",
+    "react-scripts": "^3.0.1",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
@@ -18,7 +25,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -34,7 +42,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.26.8",
+    "@babel/preset-env": "^7.26.8",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@linaria/babel": "^3.0.0-beta.0",
+    "@linaria/babel-preset": "^4.5.4",
+    "@linaria/shaker": "^5.0.3",
+    "@linaria/vite": "^4.5.4",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.10.15",
     "@testing-library/react": "^16.2.0",
-    "@types/testing-library__react": "^10.2.0"
+    "@types/testing-library__react": "^10.2.0",
+    "autoprefixer": "^10.4.20",
+    "install": "^0.13.0",
+    "npm": "^11.1.0",
+    "postcss": "^8.5.2",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.0.6"
   }
 }

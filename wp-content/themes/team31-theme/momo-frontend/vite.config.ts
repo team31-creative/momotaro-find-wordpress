@@ -1,9 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import linaria from '@linaria/vite';
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react()
+  ],
   build: {
     outDir: path.resolve(__dirname, "../js"), // WordPressの `js/` フォルダに出力
     emptyOutDir: true,

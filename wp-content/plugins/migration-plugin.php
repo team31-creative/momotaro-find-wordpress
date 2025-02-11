@@ -3,7 +3,7 @@
  * Plugin Name: Migration Plugin
  * Description: WordPress でマイグレーションファイルを作成するカスタムコマンド
  * Version: 1.0
- * Author: Your Name
+ * Author: MJ UNIQUE
  * License: GPL2
  */
 
