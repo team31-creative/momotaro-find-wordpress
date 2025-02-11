@@ -27,7 +27,7 @@ jobs:
           "to": "C4894827dee558246e7314b534eb4fa5f",
           "messages": [{
             "type": "text",
-            "text": "🚀本番環境にリリースされました！おめでとう！🎉🎉🎉\nhttps://find-momotaro.majimun-studio.com"
+            "text": "🚀本番環境にリリースされました！おめでとう！🎉🎉🎉\nhttp://find-momotaro.majimun-studio.com"
           }]
         }'
 
