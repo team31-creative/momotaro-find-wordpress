@@ -1,11 +1,18 @@
 {
+  "src/assets/FIND_MOMOTARO.svg": {
+    "file": "FIND_MOMOTARO-BecTRdOv.svg",
+    "src": "src/assets/FIND_MOMOTARO.svg"
+  },
   "src/index.tsx": {
-    "file": "main-BjuZLULK.js",
+    "file": "main-Dq02Tbsf.js",
     "name": "main",
     "src": "src/index.tsx",
     "isEntry": true,
     "css": [
-      "main-BgUjdsM6.css"
+      "main-CIfVvUo9.css"
+    ],
+    "assets": [
+      "FIND_MOMOTARO-BecTRdOv.svg"
     ]
   }
 }
