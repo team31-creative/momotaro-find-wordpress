@@ -32,6 +32,10 @@ function enqueue_vite_assets() {
             }
         }
 
+        wp_localize_script('react-app-js', 'reactAppData', array(
+            'imageUrl' => get_template_directory_uri() . '/build/static/media/'
+        ));
+
         // アイコン (favicon.ico) を登録
         echo '<link rel="icon" type="image/x-icon" href="' . $theme_dir . '/js/assets/favicon.ico">';
         echo '<link rel="apple-touch-icon" href="' . $theme_dir . '/js/assets/logo192.png">';
