@@ -7,9 +7,9 @@ npm error node_modules/react-scripts
 npm error   react-scripts@"^3.0.1" from the root project
 npm error
 npm error Could not resolve dependency:
-npm error peer react-scripts@">=5.0.0" from @storybook/preset-create-react-app@8.5.3
+npm error peer react-scripts@">=5.0.0" from @storybook/preset-create-react-app@8.5.5
 npm error node_modules/@storybook/preset-create-react-app
-npm error   dev @storybook/preset-create-react-app@"^8.5.3" from the root project
+npm error   dev @storybook/preset-create-react-app@"^8.5.5" from the root project
 npm error
 npm error Fix the upstream dependency conflict, or retry
 npm error this command with --force or --legacy-peer-deps
@@ -17,5 +17,5 @@ npm error to accept an incorrect (and potentially broken) dependency resolution.
 npm error
 npm error
 npm error For a full report see:
-npm error /Users/lequit/.npm/_logs/2025-02-11T10_40_43_016Z-eresolve-report.txt
-npm error A complete log of this run can be found in: /Users/lequit/.npm/_logs/2025-02-11T10_40_43_016Z-debug-0.log
+npm error /Users/lequit/.npm/_logs/2025-02-13T13_55_27_876Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/lequit/.npm/_logs/2025-02-13T13_55_27_876Z-debug-0.log

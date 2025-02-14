@@ -1,9 +1,10 @@
 import React from 'react';
+import MJTypography from '../../components/MJTypography';
 
 const IndexPageContainer: React.FC = () => {
     return (
         <div>
-            <h1>Welcome to the Fire Page</h1>
+            <MJTypography variant='h3' bold={true}>あああああ</MJTypography>
             <p>This is the main container for the index page content.</p>
         </div>
     );

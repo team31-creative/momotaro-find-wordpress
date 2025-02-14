@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import React from "react";
 import { css } from "@emotion/react";
 import MJMenuItemRow from "./MJMenuItemRow";
 import Logo from "../assets/FIND_MOMOTARO.svg";
@@ -47,7 +48,8 @@ const MJHeaderContainerCss = css`
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    width: 80%;
+    width: 100%;
+    max-width: 1200px;
     min-width: 340px;
     padding: 0 20px;
     margin: 0 auto;
@@ -61,6 +63,7 @@ const MJHeaderContainerCss = css`
 const MJMenuItemRowCss = css`
     width: 400px;
     margin-left: auto;
+    margin-right: 25px;
 `;
 
 export default MJHeader;
