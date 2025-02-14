@@ -57,6 +57,45 @@ add_filter('auth0_login_redirect_url', function($redirect_url) {
     return wp_login_url(); // ログイン後に wp-login.php にリダイレクト
 });
 
+function remove_news_menu() {
+    remove_menu_page('edit.php'); // ニュースのメニューを削除
+}
+add_action('admin_menu', 'remove_news_menu');
+
+function custom_post_type_news() {
+    register_post_type('news', array(
+        'labels'      => array(
+            'name'          => __('ニュース'),
+            'singular_name' => __('ニュース')
+        ),
+        'public'      => true,
+        'has_archive' => true,
+        'menu_icon'   => 'dashicons-megaphone', // ← アイコンをスピーカーに変更
+        'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'rewrite'     => array('slug' => 'news'),
+		'show_in_rest'  => true // ✅ REST API を有効化
+    ));
+}
+add_action('init', 'custom_post_type_news');
+
+function create_blog_post_type() {
+    register_post_type('blog',
+        array(
+            'labels' => array(
+                'name' => 'ブログ',
+                'singular_name' => 'ブログ記事'
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'menu_icon' => 'dashicons-admin-post', // アイコン変更
+            'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'comments'),
+            'rewrite' => array('slug' => 'blog'),
+            'show_in_rest' => true // Gutenberg対応
+        )
+    );
+}
+add_action('init', 'create_blog_post_type');
+
 /**
  * Retrieves the current time based on specified type.
  *
