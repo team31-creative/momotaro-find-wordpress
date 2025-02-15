@@ -6,3 +6,9 @@
 `npm install && npm run dev`
 
 localhost:5173にアクセス後、開発できます。ソースコードはmomo-frontendのsrc直下にあります。
+
+
+## WordPressの起動方法
+```
+docker compose up -d --build
+```
