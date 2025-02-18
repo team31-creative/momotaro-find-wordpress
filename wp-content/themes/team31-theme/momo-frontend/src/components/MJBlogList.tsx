@@ -24,7 +24,7 @@ const MJBlogList: React.FC<MJNewsListProps> = ({imgUrl, iconUrl, date, title, us
                 <MJAvatar skelton={skelton} size='S' src={iconUrl} />
                 <MJTypography skelton={skelton} style={{marginLeft: "12px", fontSize: "13px"}}>{userName}</MJTypography>
             </div>
-            <MJTypography style={{padding: "5px 10px", lineHeight: "1.3", fontSize: "10px"}}>{date && !skelton ? `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` : ''} ❤️4</MJTypography>
+            <MJTypography skelton={skelton} style={{padding: "5px 10px", lineHeight: "1.3", fontSize: "10px"}}>{date && !skelton ? `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` : ''} ❤️4</MJTypography>
         </div>
     );
 };
