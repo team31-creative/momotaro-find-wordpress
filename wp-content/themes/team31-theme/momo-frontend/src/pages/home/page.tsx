@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import IndexPageContainer from '../../features/index/IndexPageContainer';
 import { css } from '@emotion/react';
-import MJLayout from '../../components/MJLayout';
+import MJFullLayout from '../../components/MJFullLayout';
 
+// これだけHPレイアウトMJFullLayoutを採用
 function Home() {
   return (
-    <MJLayout>
+    <MJFullLayout>
         <IndexPageContainer />
-    </MJLayout>
+    </MJFullLayout>
   );
 }
 
