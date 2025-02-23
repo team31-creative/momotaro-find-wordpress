@@ -21,5 +21,6 @@ type Story = StoryObj<typeof MJSquareImage>;
 export const Default: Story = {
     args: {
         src: "https://ltag-local-development-bucket.s3.ap-southeast-2.amazonaws.com/448060286_341156948788413_907370303099670209_n.jpg",
+        account_name: "John Doe",
     },
 };
