@@ -13,8 +13,6 @@ const MJFooter = () => {
 }
 
 const MJFooterStyle = css`
-    position: absolute;
-    bottom: 0;
     background-color: #6e6e6e;
     color: white;
     width: 100%;

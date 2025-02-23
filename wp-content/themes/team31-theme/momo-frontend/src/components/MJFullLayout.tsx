@@ -22,7 +22,8 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
 
 const indexPageContainerCss = css`
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
   min-width: 340px;
 `;
 
