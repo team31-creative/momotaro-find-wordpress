@@ -87,10 +87,11 @@ function create_blog_post_type() {
             ),
             'public' => true,
             'has_archive' => true,
-            'menu_icon' => 'dashicons-admin-post', // アイコン変更
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'comments'),
+            'menu_icon' => 'dashicons-admin-post',
+            'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'comments', 'author'), 
             'rewrite' => array('slug' => 'blog'),
-            'show_in_rest' => true // Gutenberg対応
+            'show_in_rest' => true,
+            'rest_controller_class' => 'WP_REST_Posts_Controller'
         )
     );
 }
@@ -968,7 +969,7 @@ function wp_extract_urls( $content ) {
 			. '(?:'
 				. '\([\w\d]+\)|'
 				. '(?:'
-					. "[^`!()\[\]{}:'\".,<>«»“”‘’\s]|"
+					. "[^`!()\[\]{}:'\".,<>«»" . '"' . "»" . "“" . "”" . "‘" . "’\s]|"
 					. '(?:[:]\d+)?/?'
 				. ')+'
 			. ')'
@@ -4905,8 +4906,8 @@ function _mce_set_direction( $mce_init ) {
 /**
  * Determines whether WordPress is currently serving a REST API request.
  *
- * The function relies on the 'REST_REQUEST' global. As such, it only returns true when an actual REST _request_ is
- * being made. It does not return true when a REST endpoint is hit as part of another request, e.g. for preloading a
+ * The function relies on the 'REST_REQUEST' global. As such, it only returns true when an actual REST _request_
+ * is being made. It does not return true when a REST endpoint is hit as part of another request, e.g. for preloading a
  * REST response. See {@see wp_is_rest_endpoint()} for that purpose.
  *
  * This function should not be called until the {@see 'parse_request'} action, as the constant is only defined then,
@@ -9216,3 +9217,5 @@ function wp_is_heic_image_mime_type( $mime_type ) {
 
 	return in_array( $mime_type, $heic_mime_types, true );
 }
+
+
