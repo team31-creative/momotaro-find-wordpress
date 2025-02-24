@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import MJTypography from '../../components/MJTypography';
 import { css, cx } from '@emotion/css';
-import MJNewsList from '../../components/MJNewsList';
 import WPSupporter from '../../commons/wpSupporter';
+import NewsListBox from './commponents/NewsListBox';
 
 const NewsPageContainer: React.FC = () => {
     const wps = WPSupporter();
@@ -19,23 +19,13 @@ const NewsPageContainer: React.FC = () => {
         setMjNewsList(news);
         setIsLoading(false);
     }
-
-    const wpGenerateImage = (html) => {
-        return html.match(/<img [^>]*src="([^"]+)"/)[1];
-    }
     useEffect(() => {
         getNews();
     });
     return (
         <div>
             <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleCss)}>NEWS</MJTypography>
-            <ul className={newsListLayoutCss}>
-                {mjNewsList.map((news, index) => (
-                    <li key={index}>
-                        <MJNewsList skelton={isLoading} title={news.title.rendered} date={new Date(news.date)} imgUrl={wpGenerateImage(news.content.rendered)} />
-                    </li>
-                ))}
-            </ul>
+            <NewsListBox mjNewsList={mjNewsList} isLoading={isLoading} />
         </div>
     );
 };

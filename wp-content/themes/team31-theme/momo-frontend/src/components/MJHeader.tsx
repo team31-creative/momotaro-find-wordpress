@@ -21,6 +21,7 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
         { text: 'HOME', href: '/' },
         { text: 'NEWS', href: '/news' },
         { text: 'BLOG', href: '/blog' },
+        { text: 'POLL', href: '/poll' },
         { text: 'CONTACT', href: '/contact' }
     ];
 
@@ -37,7 +38,7 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 }
 
 const MJHeaderCss = css`
-    background-color:rgb(255, 255, 255);
+    background: linear-gradient(90deg, #fff 30%, #ff00c8 45%, #6200ff 80%);
     border-bottom: 1px solid rgb(0, 0, 0);
     height: 60px;
     width: 100%;
@@ -62,6 +63,7 @@ const MJHeaderContainerCss = css`
 
 const MJMenuItemRowCss = css`
     width: 400px;
+    color: white;
     margin-left: auto;
     margin-right: 25px;
 `;

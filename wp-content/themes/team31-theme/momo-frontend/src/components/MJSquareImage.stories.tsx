@@ -10,7 +10,9 @@ const meta: Meta<typeof MJSquareImage> = {
     },
     decorators: [
         (Story) => (
-            <Story />
+            <div style={{width: "400px"}}>
+                <Story />
+            </div>
         ),
     ],
 };

@@ -108,6 +108,10 @@ $table_prefix = 'wp_';
 define( 'WP_DEBUG', false );
 define('WP_HOME', getenv('WP_HOME'));  // ローカルのサイトURL
 define('WP_SITEURL', getenv('WP_HOME'));  // ローカルのサイトURL
+define('WP_ENV',getenv('WP_ENV'));
+
+define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));
+define('JWT_AUTH_CORS_ENABLE', true);
 
 
 

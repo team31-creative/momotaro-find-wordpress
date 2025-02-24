@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import MJTypography from './MJTypography';
+import NO_IMAGE from '../assets/no_image.jpg';
 import React from 'react';
 
 interface MJSquareImageProps {
@@ -14,7 +15,12 @@ const MJSquareImage: React.FC<MJSquareImageProps> = ({ src, alt = '', account_na
     return (
         <>
             <div css={containerCss} onClick={() => onClick}>
-                <img src={src} alt={alt} css={imageCss} />
+                <img 
+                    src={src} 
+                    alt={alt} 
+                    css={imageCss} 
+                    onError={(e) => (e.currentTarget.src = NO_IMAGE)} 
+                />
                 <div css={overlayCss}>
                     <MJTypography variant="h4">{account_name}</MJTypography>
                 </div>
