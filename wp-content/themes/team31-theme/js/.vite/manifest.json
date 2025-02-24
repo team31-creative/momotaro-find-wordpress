@@ -3,8 +3,12 @@
     "file": "FIND_MOMOTARO-BecTRdOv.svg",
     "src": "src/assets/FIND_MOMOTARO.svg"
   },
+  "src/assets/no_image.jpg": {
+    "file": "no_image-Bf7RxElO.jpg",
+    "src": "src/assets/no_image.jpg"
+  },
   "src/index.tsx": {
-    "file": "main-CHe97jsB.js",
+    "file": "main-Drsvay4X.js",
     "name": "main",
     "src": "src/index.tsx",
     "isEntry": true,
@@ -12,6 +16,7 @@
       "main-CIfVvUo9.css"
     ],
     "assets": [
+      "no_image-Bf7RxElO.jpg",
       "FIND_MOMOTARO-BecTRdOv.svg"
     ]
   }

@@ -1,1 +1,2 @@
-export const API_URL= 'http://find-momotaro.majimun-studio.com';
+export const API_URL= 'http://localhost';
+export const ENV = "production";
