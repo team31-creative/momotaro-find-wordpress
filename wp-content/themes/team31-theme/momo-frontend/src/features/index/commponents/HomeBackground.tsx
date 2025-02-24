@@ -32,12 +32,9 @@ const HomeBackground: React.FC<HomeBackgroundProps> = ({imageLists}) => {
     return (
         <>
             <div className={homeBackgroundImageCss}>
-                {updatedImageLists?.map((imageList) => {
-                    console.log(imageList);
-                    return (
+                {updatedImageLists?.map((imageList) => 
                         <MJSquareImage key={imageList?.name} src={imageList?.simple_local_avatar?.full} account_name={imageList?.name} />
-                    );
-                })}
+                )}
             </div>
         </>
     );
@@ -56,7 +53,7 @@ const homeBackgroundImageCss = css`
 
     @media (min-width: 800px) {
         & > div {
-            width: calc(25%); /* 4 items per row */
+            width: calc(100%/4); /* 4 items per row */
         }
     }
 `;
