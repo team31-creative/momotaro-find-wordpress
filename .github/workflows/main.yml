@@ -25,7 +25,6 @@ jobs:
         EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}  # Secrets 内の SSH 鍵を環境変数として渡す
         
     - name: Get Last Commit Message
-        id: commit_message
         run: echo "message=$(git log -1 --pretty=%B | tr '\n' ' ')" >> "$GITHUB_ENV"
 
     - name: Send notification to LINE Group
