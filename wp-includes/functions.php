@@ -97,6 +97,42 @@ function create_blog_post_type() {
 }
 add_action('init', 'create_blog_post_type');
 
+function custom_login_redirect_with_jwt_token( $redirect_to, $request, $user ) {
+    // ログインが成功した場合のみ処理
+    if ( isset( $user->ID ) ) {
+        // ユーザー名とパスワードを使用してトークンを取得
+        $response = wp_remote_post(WP_HOME.'/wp-json/jwt-auth/v1/token', [
+            'body' => json_encode([
+                'username' => $user->user_login,
+                'password' => isset($_POST['pwd']) ? $_POST['pwd'] : ''  // パスワードはフォームから取得
+            ]),
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ]
+        ]);
+
+        if (is_wp_error($response)) {
+            return $redirect_to;  // トークン取得に失敗した場合
+        }
+
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+
+		setcookie('user_jwt_token', $body['token'], time() + (3600*3), '/', '', false, false);  // 3時間有効
+    }
+
+    return $redirect_to;  // リダイレクト先を維持
+}
+
+add_filter( 'login_redirect', 'custom_login_redirect_with_jwt_token', 10, 3 );
+
+function add_roles_to_users_me($response, $user, $request) {
+    if (!empty($user->roles)) {
+        $response->data['roles'] = $user->roles;  // roles を追加
+    }
+    return $response;
+}
+add_filter('rest_prepare_user', 'add_roles_to_users_me', 10, 3);
+
 /**
  * Retrieves the current time based on specified type.
  *
@@ -200,6 +236,7 @@ function remove_sidebar_for_non_admin_users() {
         // サイドバーに表示されるメニューを非表示にする
         remove_menu_page('index.php'); // ダッシュボード
         remove_menu_page('edit.php'); // 投稿
+		remove_menu_page('edit.php?post_type=news'); // ニュース
         remove_menu_page('upload.php'); // メディア
         remove_menu_page('edit.php?post_type=page'); // 固定ページ
         remove_menu_page('edit-comments.php'); // コメント
@@ -257,6 +294,13 @@ function redirect_to_login_on_frontend_if_not_logged_in() {
     }
 }
 add_action('template_redirect', 'redirect_to_login_on_frontend_if_not_logged_in');
+
+function hide_profile_avatar_css() {
+    echo '<style>
+        .user-profile-picture { display: none !important; }
+    </style>';
+}
+add_action('admin_head', 'hide_profile_avatar_css');
 
 /**
  * Retrieves the date in localized format, based on a sum of Unix timestamp and

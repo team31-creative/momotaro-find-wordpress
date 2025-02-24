@@ -18,6 +18,15 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # GitHub Secrets に保存したプライベート鍵
 
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-237-239-8.ap-southeast-2.compute.amazonaws.com 'cd /var/www/wordpress && git pull origin master && cd wp-content/themes/team31-theme/momo-frontend && npm install && npm run build'
+      env:
+        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}  # Secrets 内の SSH 鍵を環境変数として渡す
+        
+    - name: Get Last Commit Message
+      run: echo "message=$(git log -1 --pretty=%B | tr '\n' ' ')" >> "$GITHUB_ENV"
+
     - name: Send notification to LINE Group
       run: |
         curl -X POST https://api.line.me/v2/bot/message/push \
@@ -27,13 +36,6 @@ jobs:
           "to": "C4894827dee558246e7314b534eb4fa5f",
           "messages": [{
             "type": "text",
-            "text": "🚀本番環境にリリースされました！おめでとう！🎉🎉🎉\nhttp://find-momotaro.majimun-studio.com"
+            "text": "🚀本番環境にリリースされました！おめでとう！🎉🎉🎉\nPR名：'"$message"'\nhttp://find-momotaro.majimun-studio.com"
           }]
         }'
-
-
-    - name: Deploy to EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-237-239-8.ap-southeast-2.compute.amazonaws.com 'cd /var/www/wordpress && git pull origin master'
-      env:
-        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}  # Secrets 内の SSH 鍵を環境変数として渡す

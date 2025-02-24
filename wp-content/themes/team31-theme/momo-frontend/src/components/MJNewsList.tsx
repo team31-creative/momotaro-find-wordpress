@@ -28,7 +28,8 @@ const MJNewsListCss = css`
         max-width: 100%;
         width: 100%;
         height: 274px;
-        background-color: #e9e9e9;
+        background-color: rgba(0,0,0,0.7);
+        color: #fff;
         box-sizing: border-box;
 `;
 
