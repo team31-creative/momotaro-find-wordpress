@@ -9,11 +9,13 @@ jobs:
     timeout-minutes: 7
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Install dependencies
+        run: npm ci
+        working-directory: wp-content/themes/team31-theme/momo-frontend
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: |
+          cd wp-content/themes/team31-theme/momo-frontend
+          npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
