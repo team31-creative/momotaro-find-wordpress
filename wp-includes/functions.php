@@ -68,6 +68,7 @@ function custom_post_type_news() {
             'name'          => __('ニュース'),
             'singular_name' => __('ニュース')
         ),
+		'capability_type' => 'post',
         'public'      => true,
         'has_archive' => true,
         'menu_icon'   => 'dashicons-megaphone', // ← アイコンをスピーカーに変更

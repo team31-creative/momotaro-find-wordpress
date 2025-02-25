@@ -34,7 +34,8 @@ const IndexPageContainer: React.FC = () => {
         return null; // or handle the null case appropriately
     }
     const { user } = userContext;
-    const wps = WPSupporter();
+    const role = user?.roles[0];
+    const wps = WPSupporter(Boolean(role === 'administrator'));
     
     
     // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/rules-of-hooks
@@ -42,11 +43,12 @@ const IndexPageContainer: React.FC = () => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useMemo(async () => {
-        const role = user?.roles[0];
-        const fetchedImageLists = await wps.get('users?roles=momotaro', Boolean(role === 'administrator'));
+        const fetchedImageLists = await wps.get('users?roles=momotaro');
+        console.log(fetchedImageLists);
         setImageLists(fetchedImageLists);
         
         const news = await wps.get('news');
+        console.log(news);
         setMjNewsList(news);
         setIsLoading(false);
     }, [user]);
