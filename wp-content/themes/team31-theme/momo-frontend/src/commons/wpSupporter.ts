@@ -20,11 +20,11 @@ const getAuthHeaders = () => {
     };
 };
 
-const WPSupporter = () => {
-    const get = async (slug: string, isAdmin: boolean = false, options?: any) => {
+const WPSupporter = (admin: boolean) => {
+    const isAdmin = admin;
+    const get = async (slug: string, options?: any) => {
         const baseUrl = `${API_URL}/wp-json/wp/v2/`;
         const url = `${baseUrl}${slug}`;
-        console.log(getAuthUserHeaders());
         
         const response = await window.fetch(url, {
             ...options,
