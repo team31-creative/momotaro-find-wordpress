@@ -15,7 +15,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: wp-content/themes/team31-theme/momo-frontend
-
       - name: Publish to Chromatic
         run: |
           cd wp-content/themes/team31-theme/momo-frontend
