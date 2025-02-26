@@ -68,6 +68,7 @@ function custom_post_type_news() {
             'name'          => __('ニュース'),
             'singular_name' => __('ニュース')
         ),
+		'capability_type' => 'post',
         'public'      => true,
         'has_archive' => true,
         'menu_icon'   => 'dashicons-megaphone', // ← アイコンをスピーカーに変更
@@ -117,7 +118,9 @@ function custom_login_redirect_with_jwt_token( $redirect_to, $request, $user ) {
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
 
-		setcookie('user_jwt_token', $body['token'], time() + (3600*3), '/', '', false, false);  // 3時間有効
+		$domain = ($_SERVER['HTTP_HOST'] === 'localhost') ? '' : 'find-momotaro.majimun-studio.com';
+
+		setcookie('user_jwt_token', $body['token'], time() + (3600*3), '/', $domain, false, false);  // 3時間有効
     }
 
     return $redirect_to;  // リダイレクト先を維持
