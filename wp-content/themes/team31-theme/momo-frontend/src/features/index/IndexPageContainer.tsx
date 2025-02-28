@@ -40,18 +40,20 @@ const IndexPageContainer: React.FC = () => {
     
     // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/rules-of-hooks
     const [imageLists, setImageLists] = useState<ImageListTypes[]>([]);
+    let hasAuth = wps.responseHasAuth();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useMemo(async () => {
-        const fetchedImageLists = await wps.get('users?roles=momotaro');
+        if (!hasAuth) return;
+        let fetchedImageLists = await wps.get('users?roles=momotaro');
         console.log(fetchedImageLists);
         setImageLists(fetchedImageLists);
         
-        const news = await wps.get('news');
+        let news = await wps.get('news');
         console.log(news);
         setMjNewsList(news);
         setIsLoading(false);
-    }, [user]);
+    }, [user, hasAuth]);
 
     return (
         <>

@@ -13,9 +13,9 @@ const NewsListBox: React.FC<NewsListBoxProps> = ({mjNewsList, isLoading}) => {
     }
     return (
         <ul css={newsListLayoutCss}>
-                {mjNewsList.map((news, index) => (
+                {mjNewsList?.map((news, index) => (
                     <li key={index}>
-                        <MJNewsList skelton={isLoading} title={news.title.rendered} date={new Date(news.date)} imgUrl={wpGenerateImage(news.content.rendered)} />
+                        <MJNewsList skelton={isLoading} title={news?.title?.rendered} date={new Date(news?.date)} imgUrl={wpGenerateImage(news?.content?.rendered)} />
                     </li>
                 ))}
         </ul>

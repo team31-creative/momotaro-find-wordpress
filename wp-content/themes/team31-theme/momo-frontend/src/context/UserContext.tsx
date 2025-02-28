@@ -16,20 +16,39 @@ export const UserProvider = ({ children }) => {
     const { user_info } = useParams();
     const navigate = useNavigate();
     const wps = WPSupporter(false, user_info);
+    let hasAuth = wps.responseHasAuth();
 
     useEffect(() => {
+        if (!hasAuth) {
+            const interval = setInterval(() => {
+                console.log("Checking authentication status...");
+                hasAuth = wps.responseHasAuth();
+                if (hasAuth) {
+                    clearInterval(interval);
+                    window.location.reload();
+                }
+            }, 3000);
+
+            return () => clearInterval(interval);
+        }
+    }, [hasAuth]);
+
+    useEffect(() => {
+        console.log(hasAuth);
+        if (!hasAuth) return;
         const fetchUser = async () => {
             return await wps.myGet();
         };
 
         fetchUser().then(user => {
             setUser(user);
+            console.log(user);
         });
 
         if (user_info) {
             navigate("/");
         }
-    }, []);
+    }, [navigate, user_info, hasAuth]);
 
     return (
         <UserContext.Provider value={{ user, loading }}>
