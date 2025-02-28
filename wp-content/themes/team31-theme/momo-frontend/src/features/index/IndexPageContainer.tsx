@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cx,css } from '@emotion/css';
 import HomeBackground from './commponents/HomeBackground';
 import { ImageListTypes } from './types/ImageListTypes';
@@ -42,17 +43,23 @@ const IndexPageContainer: React.FC = () => {
     const [imageLists, setImageLists] = useState<ImageListTypes[]>([]);
     let hasAuth = wps.responseHasAuth();
 
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useMemo(async () => {
-        if (!hasAuth) return;
-        let fetchedImageLists = await wps.get('users?roles=momotaro');
-        console.log(fetchedImageLists);
-        setImageLists(fetchedImageLists);
-        
-        let news = await wps.get('news');
-        console.log(news);
-        setMjNewsList(news);
-        setIsLoading(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!hasAuth) return;
+            let fetchedImageLists = await wps.get('users?roles=momotaro');
+            console.log(fetchedImageLists);
+            setImageLists(fetchedImageLists);
+            
+            let news = await wps.get('news');
+            if (news) {
+                setMjNewsList(news);
+            }
+            hasAuth = false;
+            setIsLoading(false);
+        };
+        fetchData();
     }, [user, hasAuth]);
 
     return (
@@ -61,7 +68,7 @@ const IndexPageContainer: React.FC = () => {
                 <HomeBackground imageLists={imageLists} />
                 <NewCommer />
                 <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleCss)}>NEWS</MJTypography>
-                <div css={css`width: 100%;`}>
+                <div css={newsCss}>
                     <NewsListBox isLoading={isLoading} mjNewsList={mjNewsList} />
                 </div>
                 <div className={css`height:30vh;`}></div>
@@ -73,6 +80,14 @@ const IndexPageContainer: React.FC = () => {
 const pageTitleCss = css`
     padding: 50px 0;
     color: white;
+
+    @media screen and (max-width: 800px) {
+        padding: 120px 0 80px 0;
+    }
+`;
+
+const newsCss = css`
+    width: 100%;
 `;
 
 const fullVisionCss = css`

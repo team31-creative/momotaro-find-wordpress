@@ -56,6 +56,12 @@ const homeBackgroundImageCss = css`
             width: calc(100%/4); /* 4 items per row */
         }
     }
+
+    @media (max-width: 800px) {
+        & > div {
+            width: calc(100%/2); /* 2 items per row */
+        }
+    }
 `;
 
 export default HomeBackground;

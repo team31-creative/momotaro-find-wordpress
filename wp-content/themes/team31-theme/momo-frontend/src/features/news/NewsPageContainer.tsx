@@ -21,7 +21,7 @@ const NewsPageContainer: React.FC = () => {
     }
     useEffect(() => {
         getNews();
-    });
+    },[]);
     return (
         <div>
             <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleCss)}>NEWS</MJTypography>

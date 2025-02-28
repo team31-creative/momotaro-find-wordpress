@@ -17,6 +17,8 @@ interface MenuItemLists {
 
 const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 
+    const isMobile = window.innerWidth <= 800;
+
     const menuItems: MenuItemLists[] = [
         { text: 'HOME', href: '/' },
         { text: 'NEWS', href: '/news' },
@@ -30,7 +32,7 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
     return (
         <header css={MJHeaderCss}>
             <div css={MJHeaderContainerCss}>
-                <MJButton imageUrl={Logo} onClick={() => navigate('/')} width={120} />
+                <MJButton imageUrl={Logo} onClick={() => navigate('/')} width={isMobile ? 70: 120} />
                 <MJMenuItemRow className={MJMenuItemRowCss} height={60} items={menuItems} />
             </div>
         </header>  
@@ -42,6 +44,10 @@ const MJHeaderCss = css`
     border-bottom: 1px solid rgb(0, 0, 0);
     height: 60px;
     width: 100%;
+
+    @media (max-width: 800px) {
+        height: 40px;
+    }
 `;
 
 const MJHeaderContainerCss = css`
@@ -54,11 +60,6 @@ const MJHeaderContainerCss = css`
     min-width: 340px;
     padding: 0 20px;
     margin: 0 auto;
-
-    > img {
-        height: 60px;
-        width: 120px;
-    }
 `;
 
 const MJMenuItemRowCss = css`
@@ -66,6 +67,10 @@ const MJMenuItemRowCss = css`
     color: white;
     margin-left: auto;
     margin-right: 25px;
+
+    @media (max-width: 800px) {
+        display: none;
+    }
 `;
 
 export default MJHeader;

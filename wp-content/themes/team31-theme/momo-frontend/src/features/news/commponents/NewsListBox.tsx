@@ -6,10 +6,13 @@ interface NewsListBoxProps {
     mjNewsList: any[];
     isLoading: boolean;
 }
-const NewsListBox: React.FC<NewsListBoxProps> = ({mjNewsList, isLoading}) => {
+const NewsListBox: React.FC<NewsListBoxProps> = ({mjNewsList = [], isLoading}) => {
 
     const wpGenerateImage = (html) => {
-        return html.match(/<img [^>]*src="([^"]+)"/)[1];
+        if (!html) return "https://placehold.jp/287x155.png"; // ① html が null/undefined の場合
+
+        const match = html.match(/<img [^>]*src="([^"]+)"/);
+        return match ? match[1] : "https://placehold.jp/287x155.png"; // ② match が null の場合
     }
     return (
         <ul css={newsListLayoutCss}>
@@ -25,7 +28,7 @@ const NewsListBox: React.FC<NewsListBoxProps> = ({mjNewsList, isLoading}) => {
 const newsListLayoutCss = css`
     display: flex;
     flex-wrap: wrap;
-    padding: 0 10px;
+    padding: 0 6px;
     gap: 10px;
     justify-content: start;
     max-width: 1200px;
@@ -37,7 +40,7 @@ const newsListLayoutCss = css`
     list-style: none;
     @media (max-width: 600px) {
         li {
-            flex: 0 0 calc(50% - 10px); /* Display 2 items per row */
+            flex: 0 0 calc(100%/2.06); /* Display 2 items per row */
         }
     }
 `;
