@@ -53,6 +53,17 @@ function mysql2date( $format, $date, $translate = true ) {
 	return $datetime->format( $format );
 }
 
+add_filter('login_redirect', function($redirect_to, $request, $user) {
+	if ( !isset($user->data->ID) ) {
+		return new WP_Error('authentication_failed', __('Authentication failed'), array('status' => 500));
+	}
+	$userid = $user->user_login;
+	$password = isset($_POST['pwd']) ? $_POST['pwd'] : '';
+
+	$credentials = base64_encode("$userid:$password");
+	return home_url("/?user_info=$credentials"); // ログイン後にホームページにリダイレクトし、パラメーターを追加
+}, 10, 3);
+
 add_filter('auth0_login_redirect_url', function($redirect_url) {
     return wp_login_url(); // ログイン後に wp-login.php にリダイレクト
 });
@@ -100,30 +111,16 @@ add_action('init', 'create_blog_post_type');
 
 function custom_login_redirect_with_jwt_token( $redirect_to, $request, $user ) {
     // ログインが成功した場合のみ処理
-	error_log('custom_login_redirect_with_jwt_token');
-	error_log(isset($user->ID) ? 'true' : 'false');
-    if ( isset( $user->ID ) ) {
-        // ユーザー名とパスワードを使用してトークンを取得
-        $response = wp_remote_post(WP_HOME.'/wp-json/jwt-auth/v1/token', [
-            'body' => json_encode([
-                'username' => $user->user_login,
-                'password' => isset($_POST['pwd']) ? $_POST['pwd'] : ''  // パスワードはフォームから取得
-            ]),
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ]
-        ]);
+	if ( !isset($user->data->ID) ) {
+		return new WP_Error('authentication_failed', __('Authentication failed'), array('status' => 500));
+	}
+	$userid = $user->user_login;
+	$password = isset($_POST['pwd']) ? $_POST['pwd'] : '';
 
-        if (is_wp_error($response)) {
-            return $redirect_to;  // トークン取得に失敗した場合
-        }
+	$credentials = base64_encode("$userid:$password");
 
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-
-		$domain = ($_SERVER['HTTP_HOST'] === 'localhost') ? '' : 'find-momotaro.majimun-studio.com';
-
-		setcookie('user_jwt_token', $body['token'], time() + (3600*3), '/', $domain, false, false);  // 3時間有効
-    }
+    $domain = ($_SERVER['HTTP_HOST'] === 'localhost') ? '' : 'find-momotaro.majimun-studio.com';
+	setcookie('user_info', $credentials, time() + (3600*3), '/', $domain, false, false);  // 3時間有効
 
     return $redirect_to;  // リダイレクト先を維持
 }

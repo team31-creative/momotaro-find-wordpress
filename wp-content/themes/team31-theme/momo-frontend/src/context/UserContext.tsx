@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import WPSupporter from "../commons/wpSupporter";
 
 interface UserContextType {
@@ -12,7 +13,9 @@ const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading] = useState(true);
-    const wps = WPSupporter();
+    const { user_info } = useParams();
+    const navigate = useNavigate();
+    const wps = WPSupporter(false, user_info);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -22,6 +25,10 @@ export const UserProvider = ({ children }) => {
         fetchUser().then(user => {
             setUser(user);
         });
+
+        if (user_info) {
+            navigate("/");
+        }
     }, []);
 
     return (
