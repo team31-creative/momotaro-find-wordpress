@@ -100,6 +100,8 @@ add_action('init', 'create_blog_post_type');
 
 function custom_login_redirect_with_jwt_token( $redirect_to, $request, $user ) {
     // ログインが成功した場合のみ処理
+	error_log('custom_login_redirect_with_jwt_token');
+	error_log(isset($user->ID) ? 'true' : 'false');
     if ( isset( $user->ID ) ) {
         // ユーザー名とパスワードを使用してトークンを取得
         $response = wp_remote_post(WP_HOME.'/wp-json/jwt-auth/v1/token', [

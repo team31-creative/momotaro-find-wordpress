@@ -105,7 +105,12 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define( 'WP_DEBUG', false );
+define('WP_DEBUG', true);  // デバッグモードON
+define('WP_DEBUG_LOG', true);  // エラーログをファイルに記録
+define('WP_DEBUG_DISPLAY', false);  // 画面にはエラーを表示しない
+@ini_set('log_errors', 1);
+@ini_set('error_log', '/var/www/html/wp-content/debug.log');  // ログファイルのパス指定
+
 define('WP_HOME', getenv('WP_HOME'));  // ローカルのサイトURL
 define('WP_SITEURL', getenv('WP_HOME'));  // ローカルのサイトURL
 define('WP_ENV',getenv('WP_ENV'));
