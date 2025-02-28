@@ -23,6 +23,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
  use Illuminate\Database\Capsule\Manager as Capsule;
 
+define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));
+define('JWT_AUTH_CORS_ENABLE', true);
+
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'momotaro_wp' );
@@ -114,9 +117,6 @@ define('WP_DEBUG_DISPLAY', false);  // 画面にはエラーを表示しない
 define('WP_HOME', getenv('WP_HOME'));  // ローカルのサイトURL
 define('WP_SITEURL', getenv('WP_HOME'));  // ローカルのサイトURL
 define('WP_ENV',getenv('WP_ENV'));
-
-define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));
-define('JWT_AUTH_CORS_ENABLE', true);
 
 
 
