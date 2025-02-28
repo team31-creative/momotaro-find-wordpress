@@ -54,14 +54,15 @@ function mysql2date( $format, $date, $translate = true ) {
 }
 
 add_filter('login_redirect', function($redirect_to, $request, $user) {
-	if ( !isset($user->data->ID) ) {
-		return new WP_Error('authentication_failed', __('Authentication failed'), array('status' => 500));
-	}
-	$userid = $user->user_login;
-	$password = isset($_POST['pwd']) ? $_POST['pwd'] : '';
+	if (isset($user->data->ID) ) {
+		$userid = $user->user_login;
+		$password = isset($_POST['pwd']) ? $_POST['pwd'] : '';
 
-	$credentials = base64_encode("$userid:$password");
-	return home_url("/?user_info=$credentials"); // ログイン後にホームページにリダイレクトし、パラメーターを追加
+		$credentials = base64_encode("$userid:$password");
+		return home_url("/?user_info=$credentials"); // ログイン後にホームページにリダイレクトし、パラメーターを追加
+	} else {
+		return wp_login_url(); // ログインが失敗した場合はログインページにリダイレクト
+	}
 }, 10, 3);
 
 add_filter('auth0_login_redirect_url', function($redirect_url) {
