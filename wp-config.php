@@ -23,9 +23,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
  use Illuminate\Database\Capsule\Manager as Capsule;
 
-define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));
-define('JWT_AUTH_CORS_ENABLE', true);
-
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'momotaro_wp' );
@@ -79,6 +76,8 @@ define( 'AUTH_SALT',        'put your unique phrase here' );
 define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
 define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
 define( 'NONCE_SALT',       'put your unique phrase here' );
+define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));
+define('JWT_AUTH_CORS_ENABLE', true);
 
 /**#@-*/
 
