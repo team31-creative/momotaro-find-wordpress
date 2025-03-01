@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { useMediaQuery } from "react-responsive";
 import MJMenuItemRow from "./MJMenuItemRow";
 import Logo from "../assets/FIND_MOMOTARO.svg";
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +18,7 @@ interface MenuItemLists {
 
 const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 
-    const isMobile = window.innerWidth <= 800;
+    const isMobile = useMediaQuery({ maxWidth: 800 });
 
     const menuItems: MenuItemLists[] = [
         { text: 'HOME', href: '/' },
