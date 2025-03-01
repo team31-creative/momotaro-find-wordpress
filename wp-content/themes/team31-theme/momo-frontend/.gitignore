@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *storybook.log
+
+/wp-content/themes/momo-frontend/js/.vite/
+/wp-content/themes/momo-frontend/js/main-*.js
