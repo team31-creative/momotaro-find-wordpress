@@ -7,6 +7,7 @@ import Home from './pages/home/page.tsx';
 import News from './pages/news/page.tsx';
 import Blog from './pages/blog/page.tsx';
 import Contact from './pages/contact/page.tsx';
+import NewsSpeficics from './pages/news/[id]/page.tsx';
 
 const root = ReactDOM.createRoot(
   document.getElementById('app') as HTMLElement
@@ -17,6 +18,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
+        <Route path="/news/:id" element={<NewsSpeficics />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import React from 'react';
 import { css } from "@emotion/react";
 import MJNewsList from "../../../components/MJNewsList";
+import { useNavigate } from 'react-router-dom';
 
 interface NewsListBoxProps {
     mjNewsList: any[];
@@ -14,11 +16,17 @@ const NewsListBox: React.FC<NewsListBoxProps> = ({mjNewsList = [], isLoading}) =
         const match = html.match(/<img [^>]*src="([^"]+)"/);
         return match ? match[1] : "https://placehold.jp/287x155.png"; // ② match が null の場合
     }
+
+    const navigate = useNavigate();
+    const handleMovePage = (id: number) => {
+        console.log('navigate');
+        navigate(`/news/${id}`);
+    }
     return (
         <ul css={newsListLayoutCss}>
                 {mjNewsList?.map((news, index) => (
                     <li key={index}>
-                        <MJNewsList skelton={isLoading} title={news?.title?.rendered} date={new Date(news?.date)} imgUrl={wpGenerateImage(news?.content?.rendered)} />
+                        <MJNewsList skelton={isLoading} onClick={() => handleMovePage(news?.id)} title={news?.title?.rendered} date={new Date(news?.date)} imgUrl={wpGenerateImage(news?.content?.rendered)} />
                     </li>
                 ))}
         </ul>

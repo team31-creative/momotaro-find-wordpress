@@ -37,6 +37,8 @@ const getAdminUserInfo = async () => {
     }
     const data = await response.json();
 
+    setCookie('admin_token', data.token);
+
     return data.token;
 }
 
@@ -64,6 +66,8 @@ const getUserInfo = async (userInfo) => {
     }
     const data = await response.json();
 
+    setCookie('user_token', data.token);
+
     return data.token;
 }
 
@@ -80,8 +84,6 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
 
     const cookieUserInfo = getCookie('user_info');
 
-    console.log('got account');
-
     const responseHasAuth = () => {
         return hasAuth;
     }
@@ -89,9 +91,12 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
     const get = async (slug: string, options?: any) => {
         const baseUrl = `${API_URL}/wp-json/wp/v2/`;
         const url = `${baseUrl}${slug}`;
+        const adminToken = getCookie('admin_token');
 
-        if (!admin) {
+        if (!admin && !adminToken) {
             adminAuth = await getAdminUserInfo();
+        } else {
+            adminAuth = adminToken;
         }
       
         const response = await window.fetch(url, {
@@ -110,14 +115,16 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
 
     const myGet = async () => {
 
-        if (userInfo || cookieUserInfo) {
+        const userToken = getCookie('user_token');
+
+        if ((userInfo || cookieUserInfo) && !userToken) {
             userAuth = await getUserInfo(userInfo);
+        } else {
+            userAuth = userToken;
         }
 
         console.log('認証済み');
         const baseUrl = `${API_URL}/wp-json/wp/v2/users/me`;
-
-        console.log(getAuthUserHeaders(userAuth));
         
 
         const response = await window.fetch(baseUrl, {

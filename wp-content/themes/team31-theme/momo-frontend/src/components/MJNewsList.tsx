@@ -9,11 +9,12 @@ interface MJNewsListProps {
     title: string;
     category?: string;
     skelton?: boolean;
+    onClick?: () => void;
 }
 
-const MJNewsList: React.FC<MJNewsListProps> = ({imgUrl, date, title, category, skelton}) => {
+const MJNewsList: React.FC<MJNewsListProps> = ({imgUrl, date, title, category, skelton, onClick}) => {
     return (
-        <div css={MJNewsListCss}>
+        <div css={MJNewsListCss} onClick={onClick}>
             <div css={overFlowBlockCss(skelton)}>
                 <img css={MJNewsListImageCss} src={imgUrl ?? 'https://placehold.jp/287x155.png'} alt={title} />
             </div>
@@ -31,6 +32,10 @@ const MJNewsListCss = css`
         background-color: rgba(0,0,0,0.7);
         color: #fff;
         box-sizing: border-box;
+        &:hover {
+                text-decoration: underline
+                cursor: pointer;
+        }
 `;
 
 const overFlowBlockCss = (skelton) => css`

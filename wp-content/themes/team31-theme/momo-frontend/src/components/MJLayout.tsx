@@ -14,8 +14,10 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
         <>
             <UserProvider>
                 <MJHeader />
-                <div css={indexPageContainerCss}>
-                    {children}
+                <div css={backgroundCss}>
+                    <div css={indexPageContainerCss}>
+                        {children}
+                    </div>
                 </div>
                 <MJFooter />
             </UserProvider>
@@ -23,7 +25,11 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
     );
 };
 
-const indexPageContainerCss = css`
+const backgroundCss = css`
+    background: linear-gradient(155deg, #FFFFFF 11%, #FF3ABD 35%, #6625ff 65%);
+`;
+
+const indexPageContainerCss = css`  
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
