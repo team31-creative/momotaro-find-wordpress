@@ -113,7 +113,7 @@ add_action('init', 'create_blog_post_type');
 function custom_login_redirect_with_jwt_token( $redirect_to, $request, $user ) {
     // ログインが成功した場合のみ処理
 	if ( !isset($user->data->ID) ) {
-		return new WP_Error('authentication_failed', __('Authentication failed'), array('status' => 500));
+		return wp_login_url();
 	}
 	$userid = $user->user_login;
 	$password = isset($_POST['pwd']) ? $_POST['pwd'] : '';
