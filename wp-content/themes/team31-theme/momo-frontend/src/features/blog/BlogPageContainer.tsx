@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import MJTypography from '../../components/MJTypography';
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
 import WPSupporter from '../../commons/wpSupporter';
-import MJBlogList from '../../components/MJBlogList';
+import BlogListBox from './components/BlogListBox';
 
 const pageTitleCss = css`
     padding: 50px 0;
@@ -29,7 +29,7 @@ const blogListLayoutCss = css`
 `;
 
 const BlogPageContainer: React.FC = () => {
-    const wps = WPSupporter();
+    const wps = WPSupporter(false);
     const [mjBlogs, setMjBlogs] = useState<any[]>([
         {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
         {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
@@ -37,6 +37,7 @@ const BlogPageContainer: React.FC = () => {
         {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true}
     ]);
     const [isLoading, setIsLoading] = useState(true);
+
     const getBlogs = async () => {
         const blogs = await wps.get('blog', 'author');
         console.log(blogs);
@@ -44,9 +45,6 @@ const BlogPageContainer: React.FC = () => {
         setIsLoading(false);
     }
 
-    const wpGenerateImage = (html) => {
-        return html.match(/<img [^>]*src="([^"]+)"/)[1];
-    }
     useEffect(() => {
         getBlogs();
     }, []);
@@ -54,13 +52,7 @@ const BlogPageContainer: React.FC = () => {
     return (
         <div>
             <MJTypography variant='h3' bold={true} align='center' className={pageTitleCss}>BLOG</MJTypography>
-            <ul className={blogListLayoutCss}>
-                {mjBlogs.map((blog, index) => (
-                    <li key={index}>
-                        <MJBlogList userName={blog?.author?.name ?? ''} skelton={isLoading} title={blog.title.rendered} date={new Date(blog.date)} imgUrl={wpGenerateImage(blog.content.rendered)} />
-                    </li>
-                ))}
-            </ul>
+            <BlogListBox mjBlogs={mjBlogs} isLoading={isLoading} />
         </div>
     );
 };
