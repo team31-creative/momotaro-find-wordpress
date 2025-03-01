@@ -24,7 +24,7 @@ const MJBlogList: React.FC<MJNewsListProps> = ({imgUrl, iconUrl, date, title, us
                 <MJAvatar skelton={skelton} size='S' src={iconUrl} />
                 <MJTypography skelton={skelton} style={{marginLeft: "12px", fontSize: "13px"}}>{userName}</MJTypography>
             </div>
-            <MJTypography skelton={skelton} style={{padding: "5px 10px", lineHeight: "1.3", fontSize: "10px"}}>{date && !skelton ? `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` : ''} ❤️4</MJTypography>
+            <MJTypography style={{padding: "5px 10px", lineHeight: "1.3", fontSize: "10px"}}>{date && !skelton ? `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` : ''}</MJTypography>
         </div>
     );
 };
@@ -36,8 +36,13 @@ const MJBlogListCss = css`
         max-width: 100%;
         width: 100%;
         height: 280px;
-        background-color: #ffffff;
+        // background-color: rgba(0,0,0,0.7);
+        color: #fff;
         box-sizing: border-box;
+        &:hover {
+                text-decoration: underline
+                cursor: pointer;
+        }
 `;
 
 const overFlowBlockCss = (skelton) => css`
@@ -65,6 +70,7 @@ const overFlowBlockCss = (skelton) => css`
 `;
 
 const MJBlogListImageCss = css`
+    background: #fff;
     width: 100%;
     max-width: 287px;
     max-height: 155px;

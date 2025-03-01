@@ -42,7 +42,8 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 
 const MJHeaderCss = css`
     background: linear-gradient(90deg, #fff 30%, #ff00c8 45%, #6200ff 80%);
-    border-bottom: 1px solid rgb(0, 0, 0);
+    // border-bottom: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 32px 32px rgba(0, 0, 0, 1);
     height: 60px;
     width: 100%;
 
@@ -61,6 +62,10 @@ const MJHeaderContainerCss = css`
     min-width: 340px;
     padding: 0 20px;
     margin: 0 auto;
+    @media screen and (max-width: 800px) {
+        max-width: 50px;
+        padding: 0;
+    }
 `;
 
 const MJMenuItemRowCss = css`

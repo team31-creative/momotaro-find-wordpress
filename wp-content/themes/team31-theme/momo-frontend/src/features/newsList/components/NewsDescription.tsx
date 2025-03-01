@@ -1,12 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { css } from '@emotion/css';
-import MJTypography from '../../../components/MJTypography';
-import MJIcon from '../../../components/MJIcon';
-import { mdiClock } from '@mdi/js';
 
 interface NewsDescriptionProps {
-    title: string;
+    description: string;
 }
 
 

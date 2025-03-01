@@ -47,6 +47,12 @@ const overlayCss = css`
     &:hover {
         opacity: 1;
     }
+
+    @media screen and (max-width: 600px) {
+        > .MuiTypography-root {
+            font-size: 120%;
+        }
+    }
 `;
 
 const containerCss = css`

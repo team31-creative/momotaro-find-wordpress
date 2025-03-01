@@ -63,7 +63,3 @@ const newsListLayoutCss = css`
 `;
 
 export default NewsListPageContainer;
-
-function setTitle(arg0: { title: any; date: any; }) {
-    throw new Error('Function not implemented.');
-}

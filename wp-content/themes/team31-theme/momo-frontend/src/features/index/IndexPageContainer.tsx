@@ -9,6 +9,8 @@ import WPSupporter from '../../commons/wpSupporter';
 import NewCommer from './commponents/NewCommer';
 import NewsListBox from '../news/commponents/NewsListBox';
 import MJTypography from '../../components/MJTypography';
+import BlogListBox from '../blog/components/BlogListBox';
+import { useLayout } from '../../context/LayoutContext';
 
 const IndexPageContainer: React.FC = () => {
     const [mjNewsList, setMjNewsList] = useState<any[]>([
@@ -29,7 +31,25 @@ const IndexPageContainer: React.FC = () => {
             {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
             {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true}
         ]);
+
+    const [mjBlogs, setMjBlogs] = useState<any[]>([
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+            {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
+    ]);
+
+    const { handleProcess } = useLayout();
     const [isLoading, setIsLoading] = useState(true);
+    const [imageLists, setImageLists] = useState<ImageListTypes[]>([]);
     const userContext = useUser();
     if (!userContext) {
         return null; // or handle the null case appropriately
@@ -38,9 +58,6 @@ const IndexPageContainer: React.FC = () => {
     const role = user?.roles[0];
     const wps = WPSupporter(Boolean(role === 'administrator'));
     
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/rules-of-hooks
-    const [imageLists, setImageLists] = useState<ImageListTypes[]>([]);
     let hasAuth = wps.responseHasAuth();
 
 
@@ -48,14 +65,31 @@ const IndexPageContainer: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             if (!hasAuth) return;
+
+            handleProcess(0,"トップ画像を読み込んでいます。");
+
+            // 1
             let fetchedImageLists = await wps.get('users?roles=momotaro');
-            console.log(fetchedImageLists);
             setImageLists(fetchedImageLists);
+
+            handleProcess((100/3),"ニュースを読み込んでいます。");
             
-            let news = await wps.get('news');
+            // 2
+            let news = await wps.get('news?per_page=16');   
             if (news) {
                 setMjNewsList(news);
             }
+
+            handleProcess((100/3),"ブログを読み込んでいます。");
+
+            // 3
+            let blog = await wps.get('blog?per_page=24&_embed');
+            if (blog) {
+                setMjBlogs(blog);
+            }
+
+            handleProcess((101),"まもなく表示されます。　");
+
             hasAuth = false;
             setIsLoading(false);
         };
@@ -67,9 +101,13 @@ const IndexPageContainer: React.FC = () => {
             <div className={fullVisionCss}>
                 <HomeBackground imageLists={imageLists} />
                 <NewCommer />
-                <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleCss)}>NEWS</MJTypography>
+                <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleNewsCss)}>NEWS</MJTypography>
                 <div css={newsCss}>
                     <NewsListBox isLoading={isLoading} mjNewsList={mjNewsList} />
+                </div>
+                <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleBlogCss)}>BLOG</MJTypography>
+                <div css={blogCss}>
+                    <BlogListBox isLoading={isLoading} mjBlogs={mjBlogs} />
                 </div>
                 <div className={css`height:30vh;`}></div>
             </div>
@@ -77,7 +115,7 @@ const IndexPageContainer: React.FC = () => {
     );
 };
 
-const pageTitleCss = css`
+const pageTitleNewsCss = css`
     padding: 50px 0;
     color: white;
 
@@ -86,7 +124,21 @@ const pageTitleCss = css`
     }
 `;
 
+const pageTitleBlogCss = css`
+    padding: 4em 0 50px 0;
+    color: white;
+
+    @media screen and (max-width: 800px) {
+        padding: 120px 0 80px 0;
+    }
+`;
+
 const newsCss = css`
+    width: 100%;
+    padding-bottom: 10vh;
+`;
+
+const blogCss = css`
     width: 100%;
 `;
 

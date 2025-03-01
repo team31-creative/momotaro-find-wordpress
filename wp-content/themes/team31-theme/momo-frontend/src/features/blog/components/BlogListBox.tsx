@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import React from 'react';
+
 import { css } from "@emotion/react";
 import MJBlogList from "../../../components/MJBlogList";
 
@@ -10,7 +12,10 @@ interface BlogListBoxProps {
 const BlogListBox: React.FC<BlogListBoxProps> = ({mjBlogs, isLoading}) => {
 
     const wpGenerateImage = (html) => {
-        return html.match(/<img [^>]*src="([^"]+)"/)[1];
+        if (!html) return "https://placehold.jp/287x155.png"; // ① html が null/undefined の場合
+
+        const match = html.match(/<img [^>]*src="([^"]+)"/);
+        return match ? match[1] : "https://placehold.jp/287x155.png"; // ② match が null の場合
     }
     
     return (
@@ -39,13 +44,13 @@ const blogListLayoutCss = css`
     max-width: 1200px;
     margin: 0 auto;
     li {
-        flex: 0 0 calc(25% - 10px); /* Fixed to display 4 items per row */
+        flex: 0 0 calc(16.66% - 10px); /* Fixed to display 6 items per row */
         box-sizing: border-box;
     }
     list-style: none;
     @media (max-width: 600px) {
         li {
-            flex: 0 0 calc(50% - 10px); /* Display 2 items per row */
+            flex: 0 0 calc(100%/2.06); /* Display 2 items per row */
         }
     }
 `;
