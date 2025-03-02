@@ -69,7 +69,7 @@ const IndexPageContainer: React.FC = () => {
             handleProcess(0,"トップ画像を読み込んでいます。");
 
             // 1
-            let fetchedImageLists = await wps.get('users?roles=momotaro');
+            let fetchedImageLists = await wps.get('users?roles=momotaro&_field=id,simple_local_avatar,name');
             setImageLists(fetchedImageLists);
 
             handleProcess((100/3),"ニュースを読み込んでいます。");

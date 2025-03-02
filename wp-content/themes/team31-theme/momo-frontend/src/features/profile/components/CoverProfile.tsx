@@ -23,23 +23,25 @@ const coverImageStyle = css`
 `;
 
 interface CoverProfileProps {
+    image: string;
     name: string;
+    old: string;
 }
 
-const CoverProfile: React.FC<CoverProfileProps> = ({ name }) => {
+const CoverProfile: React.FC<CoverProfileProps> = ({ image, name, old }) => {
     const isMobile = useMediaQuery({ maxWidth: 600 });
     return (
         <>
             <div css={coverImageStyle}></div>
             <TitleContainer>
-                <MJAvatar size="L" />
+                <MJAvatar size="L" src={image} />
                 {isMobile ? (
                     <TitleTextMbl variant="h5" bold={true} skelton={false}>
-                        {name}
+                        {name} {old && `(${old})`}
                     </TitleTextMbl>
                 ) : (
                     <TitleText variant="h4" bold={true} skelton={false}>
-                        {name}
+                        {name} {old && `(${old})`}
                     </TitleText>
                 )}
             </TitleContainer>

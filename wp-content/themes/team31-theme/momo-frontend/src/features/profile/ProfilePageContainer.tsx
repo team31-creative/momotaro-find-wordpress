@@ -16,7 +16,31 @@ interface WPTitleData {
     date: Date;
 }
 
-const ProfilePageContainer: React.FC = () => {
+interface ProfilePageContainerProps {
+    slug: string;
+    id: string;
+}
+
+const callColumn = [
+    'id', 
+    'name', 
+    'avatar_urls',
+    'old',
+    'catch_copy',
+    'vision',
+    'your_comefrom',
+    'your_humanity',
+    'respect_people',
+    'career',
+    'play_vision',
+    'situation',
+    'your_strong_point',
+    'seek_people',
+    'refuse_people',
+    'simple_local_avatar'
+];
+
+const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id}) => {
     const [member, setMember] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
     const [mjBlogs, setMjBlogs] = useState<any[]>([
@@ -33,7 +57,6 @@ const ProfilePageContainer: React.FC = () => {
             {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
             {title: {rendered: ''}, date: undefined, content: {rendered: '<img src="https://placehold.jp/287x155.png">'}, skelton: true},
     ]);
-    const { id } = useParams();
     const userContext = useUser();
     if (!userContext) {
             return null; // or handle the null case appropriately
@@ -42,16 +65,20 @@ const ProfilePageContainer: React.FC = () => {
     const role = user?.roles[0];
     const wps = WPSupporter(role === 'administrator');
 
+    const convertArrayToString = (arr: any[]): string => {
+        return arr.join(', ');
+    };
+
     useEffect(() => {
         const fetchData = async () => {
-            let memberProfile = await wps.get(`users/${id}?roles=momotaro`);
+            let memberProfile = await wps.get(`users/${id}?roles=${slug}&_fields=${convertArrayToString(callColumn)}`);
             console.log(memberProfile);
             setMember(memberProfile);
             
             // setTitleData({title: news.title.rendered, date: news.date});
             // setDescriptionData(news.content.rendered);
 
-            let blog = await wps.get('blog?per_page=24&_embed');
+            let blog = await wps.get(`blog?author=${id}`);
             if (blog) {
                 setMjBlogs(blog);
             }
@@ -62,9 +89,22 @@ const ProfilePageContainer: React.FC = () => {
     }, []);
     return (
         <div className={cx(profileCss)}>
-            <CoverProfile name={member.name} />
-            <ProfileDescription />
-            <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleBlogCss)}>Name's BLOG</MJTypography>
+            <CoverProfile name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
+            <ProfileDescription
+                slug={'momotaro'}
+                catchCopy={member?.catch_copy}
+                vision={member?.vision}
+                yourComefrom={member?.your_comefrom}
+                yourHumanity={member?.your_humanity}
+                respectPeople={member?.respect_people}
+                career={member?.career}
+                playVision={member?.play_vision}
+                situation={member?.situation}
+                yourStrongPoint={member?.your_strong_point}
+                seekPeople={member?.seek_people}
+                refusePeople={member?.refuse_people}
+            />
+            <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleBlogCss)}>{member?.name}'s BLOG</MJTypography>
             <div className={cx(pageRenderCss)}>
                 <BlogListBox mjBlogs={mjBlogs} isLoading={isLoading} />
             </div>

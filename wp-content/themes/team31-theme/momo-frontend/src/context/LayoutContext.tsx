@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { css } from "@emotion/react";
-import { useParams, useNavigate } from "react-router-dom";
+
 import { CircularProgress } from "@mui/material";
 import MJTypography from "../components/MJTypography";
+import Logo from "../assets/FIND_MOMOTARO.svg";
 
 interface LayoutContextType {
     user: any;
@@ -34,7 +35,7 @@ export const LayoutProvider = ({ children }) => {
         <LayoutContext.Provider value={{ handleProcess }}>
             {shouldRender && 
                 <div css={whiteSplashScreenCss(splashScreen)}>
-                    <img src="/FIND_MOMOTARO.svg" alt="loading" />
+                    <img src={Logo} alt="loading" />
                     <svg width={0} height={0}>
                         <defs>
                             <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">

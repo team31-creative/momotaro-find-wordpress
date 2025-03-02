@@ -11,17 +11,19 @@ interface MJNewsListProps {
     title: string;
     userName: string;
     skelton?: boolean;
+    onClick?: () => void;
+    onAvatarClick?: () => void;
 }
 
-const MJBlogList: React.FC<MJNewsListProps> = ({imgUrl, iconUrl, date, title, userName, skelton}) => {
+const MJBlogList: React.FC<MJNewsListProps> = ({imgUrl, iconUrl, date, title, userName, skelton, onClick, onAvatarClick}) => {
     return (
         <div css={MJBlogListCss}>
-            <div css={overFlowBlockCss(skelton)}>
+            <div css={overFlowBlockCss(skelton)} onClick={() => onClick()}>
                 <img css={MJBlogListImageCss} src={imgUrl ?? 'https://placehold.jp/287x155.png'} alt={title} />
             </div>
-            <MJTypography skelton={skelton} style={{padding: "1px 10px"}}>{title}</MJTypography>
+            <MJTypography skelton={skelton} style={{padding: "1px 10px"}} onClick={() => onClick()}>{title}</MJTypography>
             <div style={{padding: "5px 10px", display: "flex", alignItems: "center"}}>
-                <MJAvatar skelton={skelton} size='S' src={iconUrl} />
+                <MJAvatar skelton={skelton} size='S' src={iconUrl} onClick={() => onAvatarClick()} />
                 <MJTypography skelton={skelton} style={{marginLeft: "12px", fontSize: "13px"}}>{userName}</MJTypography>
             </div>
             <MJTypography style={{padding: "5px 10px", lineHeight: "1.3", fontSize: "10px"}}>{date && !skelton ? `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` : ''}</MJTypography>
@@ -40,8 +42,10 @@ const MJBlogListCss = css`
         color: #fff;
         box-sizing: border-box;
         &:hover {
-                text-decoration: underline
-                cursor: pointer;
+            cursor: pointer;
+            .MuiTypography-root {
+                text-decoration: underline;
+            }
         }
 `;
 

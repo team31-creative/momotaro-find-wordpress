@@ -8,17 +8,18 @@ interface MJAvatarProps {
     children?: React.ReactNode;
     size?: 'S' | 'M' | 'L';
     skelton?: boolean;
+    onClick?: () => void;
 }
 
-const MJAvatar: React.FC<MJAvatarProps> = ({ src, alt, size,skelton, children }) => {
+const MJAvatar: React.FC<MJAvatarProps> = ({ src, alt, size,skelton, children, onClick }) => {
     return (
-        <CustomAvatar src={src} size={size} skeleton={skelton} alt={alt}>
+        <CustomAvatar src={src} size={size} skeleton={skelton} alt={alt} onClick={() => onClick()}>
             {children}
         </CustomAvatar>
     );
 };
 
-const CustomAvatar = styled(Avatar)<{ size?: 'S' | 'M' | 'L'; skeleton?: boolean }>(({ theme, size = 'M', skeleton = false }) => {
+const CustomAvatar = styled(Avatar)<{ size?: 'S' | 'M' | 'L'; skeleton?: boolean }>(({ theme, size = 'M', skeleton = false }: any) => {
     const sizes = {
         S: theme.spacing(4),
         M: theme.spacing(7),

@@ -305,6 +305,163 @@ function hide_profile_avatar_css() {
 }
 add_action('admin_head', 'hide_profile_avatar_css');
 
+function add_custom_usermeta_on_register($user_id) {
+	add_user_meta($user_id, 'old', '', true);
+    add_user_meta($user_id, 'catch_copy', '', true);
+	add_user_meta($user_id, 'vision', '', true);
+	add_user_meta($user_id, 'your_comefrom', '', true);
+	add_user_meta($user_id, 'your_humanity', '', true);
+	add_user_meta($user_id, 'respect_people', '', true);
+	add_user_meta($user_id, 'career', '', true);
+	add_user_meta($user_id, 'play_vision', '', true);
+	add_user_meta($user_id, 'situation', '', true);
+	add_user_meta($user_id, 'your_strong_point', '', true);
+	add_user_meta($user_id, 'seek_people', '', true);
+	add_user_meta($user_id, 'refuse_people', '', true);
+}
+add_action('user_register', 'add_custom_usermeta_on_register');
+
+function add_custom_profile_field($user) {
+	?>
+	<h1>サイトに表示されるプロフィール情報</h1>
+	<table class="form-table">
+		<tr>
+			<th><label for="old">年齢</label></th>
+			<td>
+				<input type="number" name="old" id="old" value="<?php echo esc_attr(get_user_meta($user->ID, 'old', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="catch_copy">キャッチコピー</label></th>
+			<td>
+				<input type="text" name="catch_copy" id="catch_copy" value="<?php echo esc_attr(get_user_meta($user->ID, 'catch_copy', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="vision">ビジョン or 将来の方向性</label></th>
+			<td>
+				<input type="text" name="vision" id="vision" value="<?php echo esc_attr(get_user_meta($user->ID, 'vision', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="your_comefrom">出身</label></th>
+			<td>
+				<input type="text" name="your_comefrom" id="your_comefrom" value="<?php echo esc_attr(get_user_meta($user->ID, 'your_comefrom', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="your_humanity">趣味・性格・経験した部活(部活が無ければ本気になれたもの)</label></th>
+			<td>
+				<input type="text" name="your_humanity" id="your_humanity" value="<?php echo esc_attr(get_user_meta($user->ID, 'your_humanity', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="respect_people">尊敬する人</label></th>
+			<td>
+				<input type="text" name="respect_people" id="respect_people" value="<?php echo esc_attr(get_user_meta($user->ID, 'respect_people', true)); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="career">経歴</label></th>
+			<td>
+				<textarea name="career" id="career" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'career', true)); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="play_vision">やりたいこと・やりたくてやってきたこと</label></th>
+			<td>
+				<textarea name="play_vision" id="play_vision" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'play_vision', true)); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="situation">状況</label></th>
+			<td>
+				<textarea name="situation" id="situation" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'situation', true)); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="your_strong_point">現在の強み弱み</label></th>
+			<td>
+				<textarea name="your_strong_point" id="your_strong_point" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'your_strong_point', true)); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="seek_people">求めている人</label></th>
+			<td>
+				<textarea name="seek_people" id="seek_people" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'seek_people', true)); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="refuse_people">お断りな人</label></th>
+			<td>
+				<textarea name="refuse_people" id="refuse_people" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'refuse_people', true)); ?></textarea>
+			</td>
+		</tr>
+	</table>
+	<?php
+}
+add_action('show_user_profile', 'add_custom_profile_field');
+add_action('edit_user_profile', 'add_custom_profile_field');
+
+function save_custom_user_profile_field($user_id) {
+	if (!current_user_can('edit_user', $user_id)) {
+		return false;
+	}
+
+	$fields = [
+		'old',
+		'catch_copy',
+		'vision',
+		'your_comefrom',
+		'your_humanity',
+		'respect_people',
+		'career',
+		'play_vision',
+		'situation',
+		'your_strong_point',
+		'seek_people',
+		'refuse_people'
+	];
+
+	foreach ($fields as $field) {
+		error_log("$field: " . $_POST[$field]);
+		if (isset($_POST[$field])) {
+			update_user_meta($user_id, $field, sanitize_text_field($_POST[$field]));
+		}
+	}
+	
+	error_log('POSTデータ: ' . print_r($_POST, true));
+}
+add_action('personal_options_update', 'save_custom_user_profile_field'); // 自分のプロフィール
+add_action('edit_user_profile_update', 'save_custom_user_profile_field'); // 他のユーザー
+
+function add_custom_user_meta_to_rest($response, $user, $request) {
+    // `favorite_color` カスタムフィールドを追加
+	$fields = [
+		'old',
+		'catch_copy',
+		'vision',
+		'your_comefrom',
+		'your_humanity',
+		'respect_people',
+		'career',
+		'play_vision',
+		'situation',
+		'your_strong_point',
+		'seek_people',
+		'refuse_people'
+	];
+
+	foreach ($fields as $field) {
+		$response->data[$field] = get_user_meta($user->ID, $field, true);
+	}
+
+    return $response;
+}
+
+// REST API の `wp/v2/users` ルートにカスタムデータを追加
+add_filter('rest_prepare_user', 'add_custom_user_meta_to_rest', 10, 3);
+
 /**
  * Retrieves the date in localized format, based on a sum of Unix timestamp and
  * timezone offset in seconds.

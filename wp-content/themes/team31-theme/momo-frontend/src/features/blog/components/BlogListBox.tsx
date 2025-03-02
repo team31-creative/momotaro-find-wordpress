@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { css } from "@emotion/react";
 import MJBlogList from "../../../components/MJBlogList";
@@ -11,12 +12,20 @@ interface BlogListBoxProps {
 
 const BlogListBox: React.FC<BlogListBoxProps> = ({mjBlogs, isLoading}) => {
 
+    const navigate = useNavigate();
+
     const wpGenerateImage = (html) => {
         if (!html) return "https://placehold.jp/287x155.png"; // ① html が null/undefined の場合
 
         const match = html.match(/<img [^>]*src="([^"]+)"/);
         return match ? match[1] : "https://placehold.jp/287x155.png"; // ② match が null の場合
     }
+
+    const isMomotaro = (roleData) => {
+        return roleData?.some(role => role === 'momotaro') ? 'momotaro' : 'monkeydog';
+    }
+
+    console.log(mjBlogs);
     
     return (
         <ul css={blogListLayoutCss}>
@@ -28,6 +37,9 @@ const BlogListBox: React.FC<BlogListBoxProps> = ({mjBlogs, isLoading}) => {
                         title={blog.title.rendered} 
                         date={new Date(blog.date)} 
                         imgUrl={wpGenerateImage(blog.content.rendered)} 
+                        iconUrl={blog?._embedded?.author[0]?.simple_local_avatar?.full}
+                        onClick={() => navigate(`/blog/${blog?.id}`)}
+                        onAvatarClick={() => navigate(`/${isMomotaro(blog?._embedded?.roles)}/${blog.author}`)}
                     />
                 </li>
             ))}
