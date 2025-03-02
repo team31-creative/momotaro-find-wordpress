@@ -125,6 +125,10 @@ define('S3_UPLOADS_KEY', getenv('S3_UPLOADS_KEY'));
 define('S3_UPLOADS_SECRET', getenv('S3_UPLOADS_SECRET'));
 define('S3_UPLOADS_USE_INSTANCE_PROFILE', getenv('S3_UPLOADS_USE_INSTANCE_PROFILE'));
 
+if (!isset($_SERVER['HTTP_HOST']) || empty($_SERVER['HTTP_HOST'])) {
+    $_SERVER['HTTP_HOST'] = 'find-momotaro.team31.jp';
+}
+
 
 if (WP_ENV === 'production') {
     define('AS3CF_SETTINGS', serialize(array(
