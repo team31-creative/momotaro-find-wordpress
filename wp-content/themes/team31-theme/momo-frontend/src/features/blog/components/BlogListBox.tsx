@@ -32,7 +32,7 @@ const BlogListBox: React.FC<BlogListBoxProps> = ({mjBlogs, isLoading}) => {
             {mjBlogs.map((blog, index) => (
                 <li key={index}>
                     <MJBlogList 
-                        userName={blog?.author?.name ?? ''} 
+                        userName={blog?._embedded?.author[0]?.name ?? ''} 
                         skelton={isLoading} 
                         title={blog.title.rendered} 
                         date={new Date(blog.date)} 
