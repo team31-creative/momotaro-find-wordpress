@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, {useMemo} from 'react';
 import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
+
 import MJSquareImage from '../../../components/MJSquareImage';
 import { ImageListTypes } from '../types/ImageListTypes';
 
@@ -9,6 +11,8 @@ interface HomeBackgroundProps {
 }
 
 const HomeBackground: React.FC<HomeBackgroundProps> = ({imageLists}) => {
+
+    const navigate = useNavigate();
 
     const dummyImageList = {
         simple_local_avatar:{
@@ -33,7 +37,7 @@ const HomeBackground: React.FC<HomeBackgroundProps> = ({imageLists}) => {
         <>
             <div className={homeBackgroundImageCss}>
                 {updatedImageLists?.map((imageList) => 
-                        <MJSquareImage key={imageList?.name} src={imageList?.simple_local_avatar?.full ?? 'path/to/dummy/image.jpg'} account_name={imageList?.name} />
+                        <MJSquareImage key={imageList?.name} src={imageList?.simple_local_avatar?.full ?? 'path/to/dummy/image.jpg'} onClick={() => navigate('/momotaro/' + imageList?.id)} account_name={imageList?.name} />
                 )}
             </div>
         </>

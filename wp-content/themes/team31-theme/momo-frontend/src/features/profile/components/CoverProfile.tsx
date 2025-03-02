@@ -94,7 +94,7 @@ const TitleText = styled(MJTypography)`
     height: 33px;
     padding-bottom: 5px;
     padding-left: 14px;
-    margin: 20px 0 0 0;
+    margin: 0;
     color: #000000;
 `;
 

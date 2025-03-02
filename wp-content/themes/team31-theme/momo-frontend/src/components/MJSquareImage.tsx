@@ -14,7 +14,7 @@ interface MJSquareImageProps {
 const MJSquareImage: React.FC<MJSquareImageProps> = ({ src, alt = '', account_name, onClick }) => {
     return (
         <>
-            <div css={containerCss} onClick={() => onClick}>
+            <div css={containerCss} onClick={() => onClick()}>
                 <img 
                     src={src} 
                     alt={alt} 
