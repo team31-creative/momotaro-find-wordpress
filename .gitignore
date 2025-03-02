@@ -3,3 +3,5 @@ wp-content/uploads/2025/
 wp-content/themes/team31-theme/momo-frontend/.env
 wp-content/themes/team31-theme/js
 wp-content/debug.log
+wp-content/themes/momo-frontend/js/.vite/
+wp-content/themes/momo-frontend/js/main-*.js
