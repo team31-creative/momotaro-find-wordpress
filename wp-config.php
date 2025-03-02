@@ -125,6 +125,17 @@ define('S3_UPLOADS_KEY', getenv('S3_UPLOADS_KEY'));
 define('S3_UPLOADS_SECRET', getenv('S3_UPLOADS_SECRET'));
 define('S3_UPLOADS_USE_INSTANCE_PROFILE', getenv('S3_UPLOADS_USE_INSTANCE_PROFILE'));
 
+
+if (WP_ENV === 'production') {
+    define('AS3CF_SETTINGS', serialize(array(
+        'provider' => 'aws',
+        'bucket' => S3_UPLOADS_BUCKET,
+        'region' => S3_UPLOADS_REGION,
+        'key' => S3_UPLOADS_KEY,
+        'secret' => S3_UPLOADS_SECRET,
+    )));
+}
+
 /* Add any custom values between this line and the "stop editing" line. */
 
 
