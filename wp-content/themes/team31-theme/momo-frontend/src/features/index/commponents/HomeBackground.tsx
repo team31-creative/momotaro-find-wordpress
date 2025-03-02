@@ -33,7 +33,7 @@ const HomeBackground: React.FC<HomeBackgroundProps> = ({imageLists}) => {
         <>
             <div className={homeBackgroundImageCss}>
                 {updatedImageLists?.map((imageList) => 
-                        <MJSquareImage key={imageList?.name} src={imageList?.simple_local_avatar?.full} account_name={imageList?.name} />
+                        <MJSquareImage key={imageList?.name} src={imageList?.simple_local_avatar?.full ?? 'path/to/dummy/image.jpg'} account_name={imageList?.name} />
                 )}
             </div>
         </>
