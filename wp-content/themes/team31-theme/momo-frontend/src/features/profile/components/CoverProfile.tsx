@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import MJAvatar from '../../../components/MJAvatar';
 import MJTypography from '../../../components/MJTypography';
 import { useMediaQuery } from 'react-responsive';
+import MJButton from '../../../components/MJButton';
+import MJModal from '../../../components/MJModal';
+import ContactForm from './ContactForm';
 
 const coverImageStyle = css`
     width: 100%;
@@ -23,28 +26,46 @@ const coverImageStyle = css`
 `;
 
 interface CoverProfileProps {
+    id: string;
     image: string;
     name: string;
     old: string;
 }
 
-const CoverProfile: React.FC<CoverProfileProps> = ({ image, name, old }) => {
+const CoverProfile: React.FC<CoverProfileProps> = ({ id, image, name, old }) => {
     const isMobile = useMediaQuery({ maxWidth: 600 });
+    const [open, setOpen] = React.useState(true);
     return (
         <>
             <div css={coverImageStyle}></div>
             <TitleContainer>
-                <MJAvatar size="L" src={image} />
-                {isMobile ? (
-                    <TitleTextMbl variant="h5" bold={true} skelton={false}>
-                        {name} {old && `(${old})`}
-                    </TitleTextMbl>
-                ) : (
-                    <TitleText variant="h4" bold={true} skelton={false}>
-                        {name} {old && `(${old})`}
-                    </TitleText>
-                )}
+                <div css={textCss}>
+                    <MJAvatar size="L" src={image} />
+                    {isMobile ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '14px' }}>
+                            <TitleTextMbl variant="h5" bold={true} skelton={false}>
+                                {name} {old && `(${old})`}
+                            </TitleTextMbl>
+                        </div>
+                    ) : (
+                        <TitleText variant="h4" bold={true} skelton={false} style={{ marginLeft: '14px' }}>
+                            {name} {old && `(${old})`}
+                        </TitleText>
+                    )}
+                </div>
+                <div css={buttonCss}>
+                    <MJButton label="きびだんごを申請する" onClick={() => setOpen(true)} />
+                </div>
             </TitleContainer>
+            <MJModal 
+                open={open} 
+                onClose={() => setOpen(false)} 
+                title={'きびだんごを申請する'} 
+                subTitle={'以下のフォームに連絡先情報を\n入力してください。'} 
+                body={
+                    <ContactForm id={id} onSubmitEnd={() => setOpen(false)} />
+                }
+            />
         </>
     );
 };
@@ -78,6 +99,9 @@ const TitleContainer = styled.div`
 
         @media (max-width: 500px) {
             margin-top: -20px;
+            padding-bottom: 80px;
+            justify-content: left;
+            flex-direction: column;
 
             .MuiAvatar-root {
                 min-height: 15px;
@@ -88,6 +112,16 @@ const TitleContainer = styled.div`
             }
         }
     }
+`;
+
+const textCss = css`
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+    flex-direction: row;
+    text-align: left;
+    width: 100%;
 `;
 
 const TitleText = styled(MJTypography)`
@@ -103,6 +137,16 @@ const TitleTextMbl = styled(MJTypography)`
     padding-top: 5px;
     padding-left: 14px;
     color: #000000;
+`;
+
+const buttonCss = css`
+    float: right;
+
+    @media (max-width: 500px) {
+        width: 100%;
+        margin-top: 15px;
+        margin-left: auto;
+    }
 `;
 
 export default CoverProfile;

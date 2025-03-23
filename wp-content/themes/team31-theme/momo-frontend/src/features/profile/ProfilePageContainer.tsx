@@ -89,7 +89,7 @@ const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id}) =
     }, []);
     return (
         <div className={cx(profileCss)}>
-            <CoverProfile name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
+            <CoverProfile id={id} name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
             <ProfileDescription
                 slug={'momotaro'}
                 catchCopy={member?.catch_copy}

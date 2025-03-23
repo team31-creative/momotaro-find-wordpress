@@ -10,6 +10,8 @@ import Contact from './pages/contact/page.tsx';
 import NewsSpeficics from './pages/news/[id]/page.tsx';
 import Momotaro from './pages/momotaro/[id]/page.tsx';
 import MonkeyDog from './pages/monkeydog/[id]/page.tsx';
+import KibiBank from './pages/kibibank/page.tsx';
+import KibiBankModals from './pages/kibibank/monkeydog/[monkeydog_id]/page.tsx';
 
 const root = ReactDOM.createRoot(
   document.getElementById('app') as HTMLElement
@@ -18,6 +20,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* サイトページ */}
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
         <Route path="/news/:id" element={<NewsSpeficics />} />
@@ -25,6 +28,10 @@ root.render(
         <Route path="/monkeydog/:id" element={<MonkeyDog />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
+
+        {/* 桃太郎専用管理画面 */}
+        <Route path="/kibibank" element={<KibiBank />} />
+        <Route path="/kibibank/monkeydog/:monkeydog_id" element={<KibiBankModals />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

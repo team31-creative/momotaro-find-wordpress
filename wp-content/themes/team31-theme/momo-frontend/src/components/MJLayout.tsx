@@ -4,6 +4,7 @@ import MJHeader from './MJHeader';
 import MJFooter from './MJFooter';
 import { css } from '@emotion/react';
 import { UserProvider } from '../context/UserContext';
+import { SnackbarProvider } from '../context/SnackbarContext';
 
 interface MJLayoutProps {
     children: React.ReactNode;
@@ -12,15 +13,17 @@ interface MJLayoutProps {
 const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
     return (
         <>
-            <UserProvider>
-                <MJHeader />
-                <div css={backgroundCss}>
-                    <div css={indexPageContainerCss}>
-                        {children}
+            <SnackbarProvider>
+                <UserProvider>
+                    <MJHeader />
+                    <div css={backgroundCss}>
+                        <div css={indexPageContainerCss}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-                <MJFooter />
-            </UserProvider>
+                    <MJFooter />
+                </UserProvider>
+            </SnackbarProvider>
         </>
     );
 };

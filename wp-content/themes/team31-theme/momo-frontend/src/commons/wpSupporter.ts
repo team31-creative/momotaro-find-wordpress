@@ -113,6 +113,31 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
         return await response.json();
     };
 
+    const post = async (slug: string, reqBody: any, options?: any) => {
+        const baseUrl = `${API_URL}/wp-json/wp/v2/`;
+        const url = `${baseUrl}${slug}`;
+        const adminToken = getCookie('admin_token');
+
+        if (!admin && !adminToken) {
+            adminAuth = await getAdminUserInfo();
+        } else {
+            adminAuth = adminToken;
+        }
+      
+        const response = await window.fetch(url, {
+            headers: isAdmin ? getAuthUserHeaders(userAuth) : getAuthHeaders(adminAuth),
+            method: 'POST',
+            body: JSON.stringify(reqBody),
+        });
+        
+        if (!response.ok) {
+            console.log(response.text());
+            throw new Error(response.statusText);
+        }
+        
+        return await response.json();
+    }
+
     const myGet = async () => {
 
         const userToken = getCookie('user_token');
@@ -141,7 +166,7 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
     }
     
     return {
-        get,myGet,responseHasAuth
+        get,post,myGet,responseHasAuth
     };
 }
 
