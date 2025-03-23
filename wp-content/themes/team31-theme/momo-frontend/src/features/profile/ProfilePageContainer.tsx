@@ -10,6 +10,7 @@ import CoverProfile from './components/CoverProfile';
 import ProfileDescription from './components/ProfileDescription';
 import BlogListBox from '../blog/components/BlogListBox';
 import MJTypography from '../../components/MJTypography';
+import ProfileMovie from './components/ProfileMovie';
 
 interface WPTitleData {
     title: string;
@@ -90,6 +91,7 @@ const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id}) =
     return (
         <div className={cx(profileCss)}>
             <CoverProfile id={id} name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
+            <ProfileMovie />
             <ProfileDescription
                 slug={'momotaro'}
                 catchCopy={member?.catch_copy}

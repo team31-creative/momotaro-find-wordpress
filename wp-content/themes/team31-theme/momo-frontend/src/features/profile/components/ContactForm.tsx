@@ -131,7 +131,7 @@ const ContactForm: React.FC<ContactFormProps> = ( { id, onSubmitEnd }) => {
                     </div>
                 )}
             />
-            <MJButton css={buttonCss} label="フォームを送信" submit={true} />
+            <MJButton css={buttonCss} label="フォームを送信" isFat={true} submit={true} />
         </form>
     );
 }

@@ -397,7 +397,163 @@ function add_custom_profile_field($user) {
 				<textarea name="refuse_people" id="refuse_people" class="regular-text"><?php echo esc_attr(get_user_meta($user->ID, 'refuse_people', true)); ?></textarea>
 			</td>
 		</tr>
+		<tr>
+			<th><label for="user_keywords">やりたいこと100</label></th>
+			<td>
+				<div id="tag-container">
+					<?php
+					if (!empty($user_keywords)) {
+						$tags = explode(',', $user_keywords);
+						foreach ($tags as $tag) {
+							echo '<span class="tag">' . esc_html(trim($tag)) . '<span class="remove-tag">&times;</span></span>';
+						}
+					}
+					?>
+					<input type="text" id="tag-input" placeholder="キーワードを入力してEnterを押してください" />
+					<ul id="autocomplete-list"></ul>
+				</div>
+				<input type="hidden" name="user_keywords" id="user_keywords" value="<?php echo esc_attr($user_keywords); ?>" />
+				<p class="description">カンマ ( , ) 区切りで複数のキーワードを入力できます。</p>
+			</td>
+		</tr>
+		<tr>
+            <th><label for="custom_bio">資格・ポートフォリオ</label></th>
+            <td>
+                <?php
+                $custom_bio = get_the_author_meta('custom_bio', $user->ID);
+                wp_editor($custom_bio, 'custom_bio', array(
+                    'textarea_name' => 'custom_bio',
+                    'media_buttons' => false,
+                    'teeny'         => true,
+                    'quicktags'     => true
+                ));
+                ?>
+            </td>
+        </tr>
 	</table>
+
+	<style>
+        #tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid #ccc;
+            padding: 5px;
+            min-height: 40px;
+            border-radius: 5px;
+            background: #fff;
+        }
+		#tag-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #autocomplete-list {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            z-index: 1000;
+			top: 20px;
+        }
+        #autocomplete-list li {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        #autocomplete-list li:hover {
+            background: #f0f0f0;
+        }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            background: #0073aa;
+            color: #fff;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .remove-tag {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #tag-input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 14px;
+
+			
+        }
+
+		#tag-input:focus {
+			border: 0px;
+		}
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tagInput = document.getElementById("tag-input");
+            const autocompleteList = document.getElementById("autocomplete-list");
+            const tagContainer = document.getElementById("tag-container");
+            const hiddenInput = document.getElementById("user_keywords");
+
+            // ** 1. キーワード候補データ（静的リスト or Ajax対応可）**
+            const suggestions = ["lequit.jp", "SDR", "ベンダーレッド", "グリーンアップル"];
+
+            function updateHiddenInput() {
+                const tags = [...tagContainer.querySelectorAll(".tag")].map(tag => tag.firstChild.textContent);
+                hiddenInput.value = tags.join(",");
+            }
+
+            // ** 2. オートコンプリートの候補を表示 **
+            tagInput.addEventListener("input", function() {
+                const inputValue = tagInput.value.toLowerCase();
+                autocompleteList.innerHTML = "";
+
+                if (inputValue.length > 0) {
+                    const filteredSuggestions = suggestions.filter(tag => tag.toLowerCase().includes(inputValue));
+                    filteredSuggestions.forEach(tag => {
+                        const li = document.createElement("li");
+                        li.textContent = tag;
+                        li.addEventListener("click", function() {
+                            addTag(tag);
+                            autocompleteList.innerHTML = "";
+                            tagInput.value = "";
+                        });
+                        autocompleteList.appendChild(li);
+                    });
+                }
+            });
+
+            // ** 3. タグを追加 **
+            function addTag(tagText) {
+                const tag = document.createElement("span");
+                tag.classList.add("tag");
+                tag.textContent = tagText;
+
+                const removeBtn = document.createElement("span");
+                removeBtn.classList.add("remove-tag");
+                removeBtn.textContent = " ×";
+                removeBtn.addEventListener("click", function() {
+                    tag.remove();
+                    updateHiddenInput();
+                });
+
+                tag.appendChild(removeBtn);
+                tagContainer.insertBefore(tag, tagInput);
+                updateHiddenInput();
+            }
+        });
+    </script>
 	<?php
 }
 add_action('show_user_profile', 'add_custom_profile_field');

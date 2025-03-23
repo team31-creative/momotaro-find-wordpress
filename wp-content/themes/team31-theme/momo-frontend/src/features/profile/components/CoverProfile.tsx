@@ -34,7 +34,7 @@ interface CoverProfileProps {
 
 const CoverProfile: React.FC<CoverProfileProps> = ({ id, image, name, old }) => {
     const isMobile = useMediaQuery({ maxWidth: 600 });
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     return (
         <>
             <div css={coverImageStyle}></div>

@@ -12,17 +12,18 @@ interface MJButtonProps {
     border?: boolean;
     submit?: boolean;
     label?: string;
+    isFat?: boolean;
     color?: "primary" | "secondary" | "text" | "list";
 }
 
-const MJButton: React.FC<MJButtonProps> = ({ onClick, className, submit, label, imageUrl, width, border, icon, color = "primary", ...props }) => {
+const MJButton: React.FC<MJButtonProps> = ({ onClick, className, submit, label, imageUrl, width, border, icon, color = "primary", isFat, ...props }) => {
     if (imageUrl && !width) {
         throw new Error('width is required when imageUrl is provided');
     }
     return (
         <ButtonBase 
             onClick={onClick} 
-            sx={ButtonBaseCss(imageUrl, width, border, color)} 
+            sx={ButtonBaseCss(imageUrl, width, border, color,isFat)} 
             className={className}
             type={submit ? "submit" : "button"}
             {...props } 
@@ -33,7 +34,7 @@ const MJButton: React.FC<MJButtonProps> = ({ onClick, className, submit, label, 
     );
 };
 
-const ButtonBaseCss = (imageUrl, width, border, color) => css`
+const ButtonBaseCss = (imageUrl, width, border, color, isFat) => css`
     color: black;
     background-color: white;
     font-size: 16px;
@@ -53,6 +54,10 @@ const ButtonBaseCss = (imageUrl, width, border, color) => css`
     `}
 
     ${border && `border: 1px solid;`}
+
+    ${isFat && `
+        padding: 12px 32px;
+    `}
 
     ${imageUrl && `
         background-image: url(${imageUrl});
