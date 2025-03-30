@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, {useMemo} from "react";
 import { css } from "@emotion/css";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
 
 import MJTypography from "../../../components/MJTypography";
 import MJAvatar from "../../../components/MJAvatar";
@@ -22,18 +20,6 @@ const MatchingList: React.FC<EventListProps> = ({ dataList,onLink }) => {
             lists: (dataList as any[]) || [],
         }
     }, [dataList]);
-
-    const setTime = (namatime: string) => {
-        const date = new Date(namatime);
-        const time = format(date, 'HH:mm');  
-        return time;
-    }
-
-    const setWeek = (dates: string) => {
-        const date = new Date(dates);
-        const dayOfWeek = format(date, 'iiii', { locale: ja });
-        return dayOfWeek
-    } 
 
     return (
         <ul className={underParentStyle}>
