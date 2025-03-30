@@ -2,6 +2,7 @@
 import React from 'react';
 import MJHeader from './MJHeader';
 import MJFooter from './MJFooter';
+import MJFooterNav from './MJFooterNav';
 import { css } from '@emotion/react';
 import { UserProvider } from '../context/UserContext';
 import { SnackbarProvider } from '../context/SnackbarContext';
@@ -21,6 +22,7 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
                             {children}
                         </div>
                     </div>
+                    <MJFooterNav />
                     <MJFooter />
                 </UserProvider>
             </SnackbarProvider>
@@ -29,7 +31,7 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
 };
 
 const backgroundCss = css`
-    background: linear-gradient(155deg, #FFFFFF 11%, #FF3ABD 35%, #6625ff 65%);
+    background: linear-gradient(170deg, #000000 0%, #000055 35%, #aa0088 80%);
 `;
 
 const indexPageContainerCss = css`  

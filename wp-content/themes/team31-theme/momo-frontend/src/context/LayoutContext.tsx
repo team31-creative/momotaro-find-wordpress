@@ -7,6 +7,8 @@ import MJTypography from "../components/MJTypography";
 import Logo from "../assets/FIND_MOMOTARO.svg";
 
 interface LayoutContextType {
+    handleProcess(arg0: number, arg1: string): unknown;
+    handleProcess: LayoutContextType | null;
     user: any;
     loading: boolean;
 }

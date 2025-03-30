@@ -143,7 +143,7 @@ const blogCss = css`
 `;
 
 const fullVisionCss = css`
-    background: linear-gradient(170deg, #FFFFFF 0%, #FF3ABD 35%, #6625ff 59%);
+    background: linear-gradient(170deg, #000000 0%, #000055 35%, #aa0088 80%);
     // #210c52 87%, #000000 100%
     width: 100%;
     margin: 0;

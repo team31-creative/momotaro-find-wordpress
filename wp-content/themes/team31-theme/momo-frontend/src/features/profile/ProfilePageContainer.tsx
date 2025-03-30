@@ -9,6 +9,7 @@ import { useUser } from '../../context/UserContext';
 import CoverProfile from './components/CoverProfile';
 import ProfileDescription from './components/ProfileDescription';
 import BlogListBox from '../blog/components/BlogListBox';
+import MJButton from '../../components/MJButton';
 import MJTypography from '../../components/MJTypography';
 import ProfileMovie from './components/ProfileMovie';
 
@@ -20,6 +21,7 @@ interface WPTitleData {
 interface ProfilePageContainerProps {
     slug: string;
     id: string;
+    isMine?: boolean;
 }
 
 const callColumn = [
@@ -41,7 +43,7 @@ const callColumn = [
     'simple_local_avatar'
 ];
 
-const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id}) => {
+const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id, isMine}) => {
     const [member, setMember] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
     const [mjBlogs, setMjBlogs] = useState<any[]>([
@@ -89,38 +91,51 @@ const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id}) =
         fetchData();
     }, []);
     return (
-        <div className={cx(profileCss)}>
-            <CoverProfile id={id} name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
-            <ProfileMovie />
-            <ProfileDescription
-                slug={'momotaro'}
-                catchCopy={member?.catch_copy}
-                vision={member?.vision}
-                yourComefrom={member?.your_comefrom}
-                yourHumanity={member?.your_humanity}
-                respectPeople={member?.respect_people}
-                career={member?.career}
-                playVision={member?.play_vision}
-                situation={member?.situation}
-                yourStrongPoint={member?.your_strong_point}
-                seekPeople={member?.seek_people}
-                refusePeople={member?.refuse_people}
-            />
-            <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleBlogCss)}>{member?.name}'s BLOG</MJTypography>
-            <div className={cx(pageRenderCss)}>
-                <BlogListBox mjBlogs={mjBlogs} isLoading={isLoading} />
+        <>
+            <div className={cx(profileCss)}>
+                <CoverProfile id={id} name={member?.name} old={member?.old} image={member?.simple_local_avatar?.full} />
+                <ProfileMovie />
+                <ProfileDescription
+                    slug={'momotaro'}
+                    catchCopy={member?.catch_copy}
+                    vision={member?.vision}
+                    yourComefrom={member?.your_comefrom}
+                    yourHumanity={member?.your_humanity}
+                    respectPeople={member?.respect_people}
+                    career={member?.career}
+                    playVision={member?.play_vision}
+                    situation={member?.situation}
+                    yourStrongPoint={member?.your_strong_point}
+                    seekPeople={member?.seek_people}
+                    refusePeople={member?.refuse_people} 
+                />
+                <div className={cx(blogTitleCss)}>
+                    <MJTypography variant='h3' bold={true} align='left' className={cx(pageTitleBlogCss)}>{member?.name}'s BLOG</MJTypography>
+                </div>
+                <div className={cx(pageRenderCss)}>
+                    <BlogListBox mjBlogs={mjBlogs} isLoading={isLoading} />
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
 const pageTitleBlogCss = css`
-    padding: 3em 0 50px 0;
+    padding: 0;
     color: white;
 
     @media screen and (max-width: 800px) {
         padding: 120px 0 80px 0;
     }
+`;
+
+const blogTitleCss = css`
+    padding: 20px 0;
+    margin: 3em 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 `;
 
 const profileCss = css`

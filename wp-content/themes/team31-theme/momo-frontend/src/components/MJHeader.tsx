@@ -22,10 +22,10 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 
     const menuItems: MenuItemLists[] = [
         { text: 'HOME', href: '/' },
+        { text: 'MATCHING', href: '/matching' },
+        { text: 'KIBIDANGO', href: '/kibi/guest' },
         { text: 'NEWS', href: '/news' },
-        { text: 'BLOG', href: '/blog' },
-        { text: 'POLL', href: '/poll' },
-        { text: 'CONTACT', href: '/contact' }
+        { text: 'MYPAGE', href: '/mypage' }
     ];
 
     const navigate = useNavigate();
@@ -41,11 +41,13 @@ const MJHeader: React.FC<MJHeaderProps> = ({ children }) => {
 }
 
 const MJHeaderCss = css`
-    background: linear-gradient(90deg, #fff 30%, #ff00c8 45%, #6200ff 80%);
+    background: #000055;
     // border-bottom: 1px solid rgb(0, 0, 0);
-    box-shadow: 0 32px 32px rgba(0, 0, 0, 1);
+    // box-shadow: 0 32px 32px rgba(0, 0, 0, 1);
     height: 60px;
     width: 100%;
+    position: fixed;
+    z-index: 1;
 
     @media (max-width: 800px) {
         height: 40px;
@@ -69,7 +71,7 @@ const MJHeaderContainerCss = css`
 `;
 
 const MJMenuItemRowCss = css`
-    width: 400px;
+    width: 530px;
     color: white;
     margin-left: auto;
     margin-right: 25px;

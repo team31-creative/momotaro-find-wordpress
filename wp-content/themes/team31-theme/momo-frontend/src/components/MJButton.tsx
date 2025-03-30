@@ -44,8 +44,15 @@ const ButtonBaseCss = (imageUrl, width, border, color, isFat) => css`
     cursor: pointer;
 
     ${color === "primary" && css`
-        background: linear-gradient(60deg, #000000 0%, #555 100%);
+        background: linear-gradient(60deg, #020072 0%, #3300aa 100%);
+        border: 1px solid #01002d;
         color: white;
+    `}
+
+    ${color === "secondary" && css`
+        background: linear-gradient(60deg, #fff 0%, #aaa 100%);
+        border: 1px solid #ddd;
+        color: #000000;
     `}
 
     ${(color === "text" || color === "list") && `

@@ -2,6 +2,7 @@
 import React from 'react';
 import MJHeader from './MJHeader';
 import MJFooter from './MJFooter';
+import MJFooterNav from './MJFooterNav';
 import { css } from '@emotion/react';
 import { UserProvider } from '../context/UserContext';
 import { LayoutProvider } from '../context/LayoutContext';
@@ -19,6 +20,7 @@ const MJLayout: React.FC<MJLayoutProps> = ({ children }) => {
                     <div css={indexPageContainerCss}>
                         {children}
                     </div>
+                    <MJFooterNav />
                     <MJFooter />
                 </UserProvider>
             </LayoutProvider>

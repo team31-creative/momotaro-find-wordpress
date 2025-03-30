@@ -30,7 +30,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_6595cf7d14dacb0"
+    "chromatic": "npx chromatic --project-token=chpt_6595cf7d14dacb0",
+    "create-file": "node scripts/createFile.js"
   },
   "eslintConfig": {
     "extends": [

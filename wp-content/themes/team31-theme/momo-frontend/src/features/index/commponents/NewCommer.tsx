@@ -93,6 +93,7 @@ const titleCss = css`
     line-height: 1;
     font-weight: 700;
     margin-left: 40px;
+    color: #fff;
 
     @media (max-width: 800px) {
         font-size: 40px;
