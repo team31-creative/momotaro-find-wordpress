@@ -2,7 +2,7 @@
 import React from "react";
 import MypagePageContainer from "../../features/mypage/MypagePageContainer";
 import MJLayout from "../../components/MJLayout";
-export default function MypagePage() {
+export default function MyPage() {
   return (
     <MJLayout>
         <MypagePageContainer />

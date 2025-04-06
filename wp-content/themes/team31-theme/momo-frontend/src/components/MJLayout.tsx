@@ -38,6 +38,7 @@ const indexPageContainerCss = css`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 40px;
   min-width: 340px;
 `;
 

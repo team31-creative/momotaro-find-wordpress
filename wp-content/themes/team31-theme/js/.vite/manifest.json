@@ -1,6 +1,6 @@
 {
   "src/assets/FIND_MOMOTARO.svg": {
-    "file": "FIND_MOMOTARO-BecTRdOv.svg",
+    "file": "FIND_MOMOTARO-CRp6ZYnp.svg",
     "src": "src/assets/FIND_MOMOTARO.svg"
   },
   "src/assets/no_image.jpg": {
@@ -8,7 +8,7 @@
     "src": "src/assets/no_image.jpg"
   },
   "src/index.tsx": {
-    "file": "main-j5R6nIG2.js",
+    "file": "main-DhwXDtu3.js",
     "name": "main",
     "src": "src/index.tsx",
     "isEntry": true,
@@ -17,7 +17,7 @@
     ],
     "assets": [
       "no_image-Bf7RxElO.jpg",
-      "FIND_MOMOTARO-BecTRdOv.svg"
+      "FIND_MOMOTARO-CRp6ZYnp.svg"
     ]
   }
 }

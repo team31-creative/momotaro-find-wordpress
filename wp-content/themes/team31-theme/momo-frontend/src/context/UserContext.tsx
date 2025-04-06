@@ -8,7 +8,7 @@ interface UserContextType {
 }
 
 // UserContext を作成
-const UserContext = createContext<UserContextType | null>(null);
+const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);

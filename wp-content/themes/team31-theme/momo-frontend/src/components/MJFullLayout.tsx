@@ -32,6 +32,7 @@ const indexPageContainerCss = css`
   width: 100%;
   margin: 0;
   padding: 0;
+  padding-top: 40px;
   min-width: 340px;
 `;
 

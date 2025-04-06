@@ -1,15 +1,18 @@
-import { css } from "@emotion/css";
+import { css,cx } from "@emotion/css";
 import React from "react";
 import DecisionButton from "./components/DecisionButton";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import MatchingList from "./components/MatchingList";
+import MJTypography from "../../components/MJTypography";
+import { Tracking } from "../../commons/commponents/Tracking";
 
 const KibiPageContainer: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
     const extractSegment = currentPath.split("/kibi/")[1]?.split("/")[0] || "";
+    const [open, setOpen] = React.useState(false);
 
     const mockData = [
         {
@@ -36,10 +39,11 @@ const KibiPageContainer: React.FC = () => {
             <DecisionButton 
                 onClick1={() => navigate('/kibi/guest')} 
                 onClick2={() => navigate('/kibi/mine')} 
-                onClick3={() => console.log('足あと')}
+                onClick3={() => setOpen(true)}
                 constants={extractSegment} 
             />
             <MatchingList dataList={mockData} onLink={(name) => console.log(name)} />
+            <Tracking open={open} onClose={() => setOpen(false)} />
         </div>
     )
 }
@@ -49,6 +53,5 @@ const fullSizeCss = css`
     min-height: 94vh;
     height: auto;
     margin: 0;
-`
-
+`;
 export default KibiPageContainer;

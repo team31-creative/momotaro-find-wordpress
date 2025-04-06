@@ -14,7 +14,7 @@ import KibiBank from './pages/kibibank/page.tsx';
 import KibiBankModals from './pages/kibibank/monkeydog/[monkeydog_id]/page.tsx';
 import Kibi from './pages/kibi/page.tsx';
 import Matching from './pages/matching/page.tsx';
-import MypagePage from './pages/mypage/page.tsx';
+import MyPage from './pages/mypage/page.tsx';
 
 const root = ReactDOM.createRoot(
   document.getElementById('app') as HTMLElement
@@ -35,10 +35,11 @@ root.render(
         <Route path="/kibi/mine" element={<Kibi />} />
 
         { /** マイページ */}
-        <Route path="/mypage" element={<MypagePage />} />
+        <Route path="/mypage" element={<MyPage />} />
 
         { /** お知らせ */}
         <Route path="/news" element={<News />} />
+        <Route path="/news/:id" element={<NewsSpeficics />} />
 
 
 

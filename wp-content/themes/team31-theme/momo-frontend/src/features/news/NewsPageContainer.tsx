@@ -50,7 +50,7 @@ const newsListLayoutCss = css`
     min-height: 100vh;
     height: auto;
     > .MuiTypography-root {
-        color: #000000;
+        color: #ffffff;
     }
 `;
 
