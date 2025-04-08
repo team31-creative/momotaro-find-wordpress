@@ -9,6 +9,18 @@ localhost:5173にアクセス後、開発できます。ソースコードはmom
 
 
 ## WordPressの起動方法
+本開発は、Dockerを使用していますので、[Docker](https://www.docker.com/)のインストールをお願いいたします。
 ```
 docker compose up -d --build
+```
+
+## ブランチの命名方法
+以下のように命名をお願いいたします。
+```
+GitHub名/issue番号
+```
+
+例:)
+```
+mju-vigora/issue-1200
 ```
