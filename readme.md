@@ -3,7 +3,7 @@
 1. clone後このディレクトリまでアクセスしてください
 `cd wp-content/themes/team31-theme/momo-frontend`
 2. 以下のディレクトリにアクセス後、このコマンドを実行してください。
-`npm install && npm run dev`
+`yarn install && yarn dev`
 
 localhost:5173にアクセス後、開発できます。ソースコードはmomo-frontendのsrc直下にあります。
 
@@ -24,3 +24,6 @@ GitHub名/issue番号
 ```
 mju-vigora/issue-1200
 ```
+
+## PR提出の際に！！
+- issueのリンクも一緒にお願いいたします。
