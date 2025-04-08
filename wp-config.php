@@ -113,9 +113,9 @@ define('WP_DEBUG_DISPLAY', false);  // 画面にはエラーを表示しない
 @ini_set('log_errors', 1);
 @ini_set('error_log', '/var/www/wordpress/wp-content/debug.log');  // ログファイルのパス指定
 
-define('WP_HOME', getenv('WP_HOME'));  // ローカルのサイトURL
-define('WP_SITEURL', getenv('WP_HOME'));  // ローカルのサイトURL
-define('WP_ENV',getenv('WP_ENV'));
+define('WP_HOME', 'https://find-momotaro.team31.jp');  // ローカルのサイトURL
+define('WP_SITEURL', 'https://find-momotaro.team31.jp');  // ローカルのサイトURL
+define('WP_ENV','https://find-momotaro.team31.jp');
 
 
 
