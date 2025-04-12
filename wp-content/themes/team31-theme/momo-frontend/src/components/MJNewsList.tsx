@@ -29,8 +29,8 @@ const MJNewsListCss = css`
         max-width: 100%;
         width: 100%;
         height: 274px;
-        background-color: rgba(0,0,0,0.7);
-        color: #fff;
+        background-color: rgba(255, 255, 255, 0.7);
+        color: #000000;
         box-sizing: border-box;
         &:hover {
                 text-decoration: underline

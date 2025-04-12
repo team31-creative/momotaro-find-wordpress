@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { css } from '@emotion/css';
 import MJButton from '../../../components/MJButton';
-import { mdiAccount, mdiStar } from '@mdi/js';
+import { mdiAccount, mdiStar, mdiShoePrint } from '@mdi/js';
 import MJTypography from '../../../components/MJTypography';
 import { Tracking } from '../../../commons/commponents/Tracking';
 
@@ -16,7 +16,7 @@ const CoverButton: React.FC = () => {
                 <MJTypography variant="body2" align='center'>プロフィール</MJTypography>
             </div>
             <div className={appIconCss}>
-                <MJButton icon={mdiAccount} onClick={() => setOpen(true)} />
+                <MJButton icon={mdiShoePrint} onClick={() => setOpen(true)} />
                 <MJTypography variant="body2" align='center'>足あと</MJTypography>
             </div>
             <div className={appIconCss}>

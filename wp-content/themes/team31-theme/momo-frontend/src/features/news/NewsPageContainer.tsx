@@ -49,6 +49,7 @@ const pageTitleCss = css`
 const newsListLayoutCss = css`
     min-height: 100vh;
     height: auto;
+    padding-bottom: 120px;
     > .MuiTypography-root {
         color: #ffffff;
     }

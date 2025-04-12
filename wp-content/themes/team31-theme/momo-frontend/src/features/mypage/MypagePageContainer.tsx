@@ -13,7 +13,7 @@ const MypagePageContainer: React.FC = () => {
     }, [user])
     return <>
         <div className={fullSizeCss}>
-            <CoverProfile id={user?.id} name={user?.name} old={user?.old} />
+            <CoverProfile id={user?.id} name={user?.name} old={user?.old} image={user?.simple_local_avatar?.full} />
             <CoverButton />
         </div>
     </>;

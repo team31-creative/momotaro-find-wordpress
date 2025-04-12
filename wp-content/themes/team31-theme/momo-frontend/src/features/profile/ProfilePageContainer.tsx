@@ -140,9 +140,13 @@ const blogTitleCss = css`
 
 const profileCss = css`
     position: relative;
-    padding-top: 20px;
+    padding-top: 50px;
     width: 100%;
     height: auto;
+
+    @media (max-width: 500px) {
+        padding-top: 20px;
+    }
 `;
 
 const pageRenderCss = css`

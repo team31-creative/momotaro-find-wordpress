@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import WPSupporter from "../commons/wpSupporter";
+import { setCookie } from "../lib/cookie";
 
 interface UserContextType {
     user: any;
@@ -16,7 +17,7 @@ export const UserProvider = ({ children }) => {
     const [searchParams] = useSearchParams();
     const user_info = searchParams.get("user_info");
     const navigate = useNavigate();
-    const wps = WPSupporter(false, user_info || undefined);
+    const wps = WPSupporter(false);
     let hasAuth = wps.responseHasAuth();
 
     useEffect(() => {
@@ -48,6 +49,7 @@ export const UserProvider = ({ children }) => {
         });
 
         if (user_info) {
+            setCookie("user_token", user_info);
             navigate("/");
         }
     }, [navigate, user_info, hasAuth]);

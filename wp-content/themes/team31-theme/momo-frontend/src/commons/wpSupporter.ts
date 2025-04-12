@@ -6,14 +6,14 @@ const isDevelopment = (ENV as Environment) === 'development';
 
 const getAuthUserHeaders = (userInfo) => {
     const authHeader = {}
-    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${userInfo}`;
+    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${userInfo || getCookie('user_token')}`;
     authHeader["Content-Type"] = "application/json";
     return authHeader;
 };
 
 const getAuthHeaders = (adminInfo) => {
     const authHeader = {}
-    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${adminInfo}`;
+    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${adminInfo || getCookie('admin_token')}`;
     authHeader["Content-Type"] = "application/json";
     return authHeader;
 };

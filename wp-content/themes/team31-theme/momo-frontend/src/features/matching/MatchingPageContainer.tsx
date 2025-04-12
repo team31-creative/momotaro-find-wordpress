@@ -20,11 +20,6 @@ const marginCss = css`
     padding: 50px 0 25px 0;
 `;
 
-const marginDescriptCss = css`
-    padding: 0 0 20px 0;
-    margin: 0;
-`;
-
 const buttonCss = css`
     display: flex; 
     justify-content: center; 
@@ -120,7 +115,6 @@ const MatchingPageContainer: React.FC = () => {
     return (
         <div className={cx(blogListLayoutCss)}>
             <MJTypography variant='h3' bold={true} align='center' className={cx(marginCss)}>Matching</MJTypography>
-            <MJTypography variant='h5' bold={true} align='center' className={cx(marginDescriptCss)}>文面？？？</MJTypography>
             <MatchingList dataList={mockData} onLink={setDisplay} />
             <MJModal 
                 open={descriptionModal} 
