@@ -6,7 +6,6 @@ import HomeBackground from './commponents/HomeBackground';
 import { ImageListTypes } from './types/ImageListTypes';
 import { useUser } from '../../context/UserContext';
 import WPSupporter from '../../commons/wpSupporter';
-import NewCommer from './commponents/NewCommer';
 import NewsListBox from '../news/commponents/NewsListBox';
 import MJTypography from '../../components/MJTypography';
 import BlogListBox from '../blog/components/BlogListBox';
@@ -100,7 +99,6 @@ const IndexPageContainer: React.FC = () => {
         <>
             <div className={fullVisionCss}>
                 <HomeBackground imageLists={imageLists} />
-                <NewCommer />
                 <MJTypography variant='h3' bold={true} align='center' className={cx(pageTitleNewsCss)}>NEWS</MJTypography>
                 <div css={newsCss}>
                     <NewsListBox isLoading={isLoading} mjNewsList={mjNewsList} />
@@ -135,7 +133,7 @@ const pageTitleBlogCss = css`
 
 const newsCss = css`
     width: 100%;
-    padding-bottom: 10vh;
+    padding: 15vh 0;
 `;
 
 const blogCss = css`

@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
     let hasAuth = wps.responseHasAuth();
 
     useEffect(() => {
+        console.log("UserParams", user_info);
         if (!hasAuth) {
             const interval = setInterval(() => {
                 console.log("Checking authentication status...");
