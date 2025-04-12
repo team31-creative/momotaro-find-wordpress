@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import WPSupporter from "../commons/wpSupporter";
 
 interface UserContextType {
@@ -13,9 +13,10 @@ const UserContext = createContext<UserContextType>({} as UserContextType);
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading] = useState(true);
-    const { user_info } = useParams();
+    const [searchParams] = useSearchParams();
+    const user_info = searchParams.get("user_info");
     const navigate = useNavigate();
-    const wps = WPSupporter(false, user_info);
+    const wps = WPSupporter(false, user_info || undefined);
     let hasAuth = wps.responseHasAuth();
 
     useEffect(() => {
