@@ -15,6 +15,7 @@ import KibiBankModals from './pages/kibibank/monkeydog/[monkeydog_id]/page.tsx';
 import Kibi from './pages/kibi/page.tsx';
 import Matching from './pages/matching/page.tsx';
 import MyPage from './pages/mypage/page.tsx';
+import { UserProvider }  from './context/UserContext.tsx';
 
 const root = ReactDOM.createRoot(
   document.getElementById('app') as HTMLElement
@@ -22,38 +23,41 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        {/* サイトページ */}
-        <Route path="/" element={<Home />} />
+      <UserProvider>
+        {/** ルーティング */}
+        <Routes>
+          {/* サイトページ */}
+          <Route path="/" element={<Home />} />
 
-        { /** マッチング */}
-        <Route path="/matching" element={<Matching />} />
+          { /** マッチング */}
+          <Route path="/matching" element={<Matching />} />
 
-        { /** きびだんご */}
-        <Route path="/kibi" element={<Kibi />} />
-        <Route path="/kibi/guest" element={<Kibi />} />
-        <Route path="/kibi/mine" element={<Kibi />} />
+          { /** きびだんご */}
+          <Route path="/kibi" element={<Kibi />} />
+          <Route path="/kibi/guest" element={<Kibi />} />
+          <Route path="/kibi/mine" element={<Kibi />} />
 
-        { /** マイページ */}
-        <Route path="/mypage" element={<MyPage />} />
+          { /** マイページ */}
+          <Route path="/mypage" element={<MyPage />} />
 
-        { /** お知らせ */}
-        <Route path="/news" element={<News />} />
-        <Route path="/news/:id" element={<NewsSpeficics />} />
+          { /** お知らせ */}
+          <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsSpeficics />} />
 
 
 
-        { /** その他 */}
-        <Route path="/momotaro/:id" element={<Momotaro />} />
-        <Route path="/monkeydog/:id" element={<MonkeyDog />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
+          { /** その他 */}
+          <Route path="/momotaro/:id" element={<Momotaro />} />
+          <Route path="/monkeydog/:id" element={<MonkeyDog />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
         
 
-        {/* 桃太郎専用管理画面 */}
-        <Route path="/kibibank" element={<KibiBank />} />
-        <Route path="/kibibank/monkeydog/:monkeydog_id" element={<KibiBankModals />} />
-      </Routes>
+          {/* 桃太郎専用管理画面 */}
+          <Route path="/kibibank" element={<KibiBank />} />
+          <Route path="/kibibank/monkeydog/:monkeydog_id" element={<KibiBankModals />} />
+        </Routes>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
