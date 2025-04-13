@@ -164,6 +164,15 @@ function kibidango_add_request(WP_REST_Request $request) {
         return new WP_Error('invalid_data', '無効なデータです', ['status' => 400]);
     }
 
+    // Check roles of current user and requested_to user
+    $current_user_roles = wp_get_current_user()->roles;
+    $requested_to_user = get_userdata($requested_to);
+    $requested_to_roles = $requested_to_user ? $requested_to_user->roles : [];
+
+    if (array_intersect($current_user_roles, $requested_to_roles)) {
+        return new WP_Error('invalid_request', '同じ権限を持つユーザーには申請できません', ['status' => 403]);
+    }
+
     $table_name = $wpdb->prefix . 'kibidango_requests';
     $contact_table_name = $wpdb->prefix . 'monkeydog_contacts';
 
