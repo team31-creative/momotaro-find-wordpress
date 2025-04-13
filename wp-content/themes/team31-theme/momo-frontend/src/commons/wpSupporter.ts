@@ -4,16 +4,16 @@ type Environment = 'development' | 'production';
 
 const isDevelopment = (ENV as Environment) === 'development';
 
-const getAuthUserHeaders = (userInfo) => {
+const getAuthUserHeaders = () => {
     const authHeader = {}
-    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${userInfo || getCookie('user_token')}`;
+    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${getCookie('user_token')}`;
     authHeader["Content-Type"] = "application/json";
     return authHeader;
 };
 
-const getAuthHeaders = (adminInfo) => {
+const getAuthHeaders = () => {
     const authHeader = {}
-    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${adminInfo || getCookie('admin_token')}`;
+    authHeader["Authorization"] = isDevelopment ? `Basic ${btoa('t31bot:Tokyo_Daigaku_01')}`: `Bearer ${getCookie('admin_token')}`;
     authHeader["Content-Type"] = "application/json";
     return authHeader;
 };
@@ -72,17 +72,11 @@ const getUserInfo = async (userInfo) => {
 }
 
 const WPSupporter = (admin: boolean = false, user_info?: string) => {
-    const isAdmin = admin;
     const userInfo = user_info;
     let hasAuth = true;
-    let userAuth: string | null = null;
-    let adminAuth: string | null = null;
-
     if (userInfo) {
         setCookie('user_info', user_info);
     }
-
-    const cookieUserInfo = getCookie('user_info');
 
     const responseHasAuth = () => {
         return hasAuth;
@@ -91,17 +85,10 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
     const get = async (slug: string, options?: any) => {
         const baseUrl = `${API_URL}/wp-json/wp/v2/`;
         const url = `${baseUrl}${slug}`;
-        const adminToken = getCookie('admin_token');
-
-        if (!admin && !adminToken) {
-            adminAuth = await getAdminUserInfo();
-        } else {
-            adminAuth = adminToken;
-        }
       
         const response = await window.fetch(url, {
             ...options,
-            headers: isAdmin? getAuthUserHeaders(userAuth) : getAuthHeaders(adminAuth),
+            headers: getAuthUserHeaders(),
             method: 'GET',
         });
         
@@ -113,19 +100,12 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
         return await response.json();
     };
 
-    const post = async (slug: string, reqBody: any, options?: any) => {
+    const post = async (slug: string, reqBody: any) => {
         const baseUrl = `${API_URL}/wp-json/wp/v2/`;
         const url = `${baseUrl}${slug}`;
-        const adminToken = getCookie('admin_token');
-
-        if (!admin && !adminToken) {
-            adminAuth = await getAdminUserInfo();
-        } else {
-            adminAuth = adminToken;
-        }
       
         const response = await window.fetch(url, {
-            headers: isAdmin ? getAuthUserHeaders(userAuth) : getAuthHeaders(adminAuth),
+            headers: getAuthUserHeaders(),
             method: 'POST',
             body: JSON.stringify(reqBody),
         });
@@ -138,22 +118,32 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
         return await response.json();
     }
 
-    const myGet = async () => {
-
-        const userToken = getCookie('user_token');
-
-        if ((userInfo || cookieUserInfo) && !userToken) {
-            userAuth = await getUserInfo(userInfo);
-        } else {
-            userAuth = userToken;
+    const forceGet = async (slug: string, options?: any) => {
+        const baseUrl = `${API_URL}/wp-json/wp/v2/`;
+        const url = `${baseUrl}${slug}`;
+      
+        const response = await window.fetch(url, {
+            ...options,
+            headers:  getAuthHeaders(),
+            method: 'GET',
+        });
+        
+        if (!response.ok) {
+            console.log(response.text());
+            throw new Error(response.statusText);
         }
+        
+        return await response.json();
+    };
+
+    const myGet = async () => {
 
         console.log('認証済み');
         const baseUrl = `${API_URL}/wp-json/wp/v2/users/me`;
         
 
         const response = await window.fetch(baseUrl, {
-            headers: getAuthUserHeaders(userAuth),
+            headers: getAuthUserHeaders(),
             method: 'GET',
         })
 
@@ -166,7 +156,7 @@ const WPSupporter = (admin: boolean = false, user_info?: string) => {
     }
     
     return {
-        get,post,myGet,responseHasAuth
+        get,post,forceGet,myGet,responseHasAuth
     };
 }
 

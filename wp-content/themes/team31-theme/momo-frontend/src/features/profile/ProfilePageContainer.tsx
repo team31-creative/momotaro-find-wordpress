@@ -74,14 +74,14 @@ const ProfilePageContainer: React.FC<ProfilePageContainerProps> = ({slug, id, is
 
     useEffect(() => {
         const fetchData = async () => {
-            let memberProfile = await wps.get(`users/${id}?roles=${slug}&_fields=${convertArrayToString(callColumn)}`);
+            let memberProfile = await wps.forceGet(`users/${id}?roles=${slug}&_fields=${convertArrayToString(callColumn)}`);
             console.log(memberProfile);
             setMember(memberProfile);
             
             // setTitleData({title: news.title.rendered, date: news.date});
             // setDescriptionData(news.content.rendered);
 
-            let blog = await wps.get(`blog?author=${id}`);
+            let blog = await wps.forceGet(`blog?author=${id}`);
             if (blog) {
                 setMjBlogs(blog);
             }

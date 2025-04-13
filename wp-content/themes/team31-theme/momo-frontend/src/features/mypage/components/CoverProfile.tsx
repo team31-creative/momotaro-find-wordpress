@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 const coverImageStyle = css`
     width: 100%;
     height: 420px;
-    background-color: black;
+    background-color: #ffffff;
     border-radius: 30px;
     margin: 0 auto;
     display: flex;

@@ -6,34 +6,39 @@ import { useNavigate } from "react-router-dom";
 import MatchingList from "./components/MatchingList";
 import MJTypography from "../../components/MJTypography";
 import { Tracking } from "../../commons/commponents/Tracking";
+import { useUser } from "../../context/UserContext";
+import WPSupporter from "../../commons/wpSupporter";
 
 const KibiPageContainer: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { user } = useUser();
+    const role = user?.roles[0];
+    const wps = WPSupporter(Boolean(role === 'administrator'));
     const currentPath = location.pathname;
     const extractSegment = currentPath.split("/kibi/")[1]?.split("/")[0] || "";
     const [open, setOpen] = React.useState(false);
+    const [data, setData] = React.useState([]);
+    const route = currentPath.split("/")[2] || "";
 
-    const mockData = [
-        {
-            id: "1",
-            name: "イエロー ミニオン",
-            icon: "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "Description for Matching 1",
-        },
-        {
-            id: "2",
-            name: "シベハスキー",
-            icon: "https://plus.unsplash.com/premium_photo-1666229410352-c4686b71cea2?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "Description for Matching 2",
-        },
-        {
-            id: "3",
-            name: "猿猿",
-            icon: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "Description for Matching 3",
-        },
-    ];
+    React.useEffect(() => {
+        const handleProcess = async () => {
+            setData([]);
+            console.log("request!!");
+            if (route === "guest") {
+                const apiData = await wps.get('kibidango/now_requests');
+                setData(apiData);
+                return;
+            }
+            if (route === "mine") {
+                const apiData = await wps.get('kibidango/now_requests_mine');
+                setData(apiData);
+                return;
+            }
+        };
+        handleProcess();
+    }, []);
+    
     return (
         <div className={fullSizeCss}>
             <DecisionButton 
@@ -42,7 +47,7 @@ const KibiPageContainer: React.FC = () => {
                 onClick3={() => setOpen(true)}
                 constants={extractSegment} 
             />
-            <MatchingList dataList={mockData} onLink={(name) => console.log(name)} />
+            <MatchingList dataList={data} onLink={(name) => console.log(name)} />
             <Tracking open={open} onClose={() => setOpen(false)} />
         </div>
     )

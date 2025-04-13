@@ -35,7 +35,7 @@ const BlogPageContainer: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getBlogs = async () => {
-        const blogs = await wps.get('blog', 'author');
+        const blogs = await wps.forceGet('blog', 'author');
         console.log(blogs);
         setMjBlogs(blogs);
         setIsLoading(false);

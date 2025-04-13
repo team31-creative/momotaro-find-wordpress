@@ -68,7 +68,7 @@ const IndexPageContainer: React.FC = () => {
             handleProcess(0,"トップ画像を読み込んでいます。");
 
             // 1
-            let fetchedImageLists = await wps.get('users?roles=momotaro&_field=id,simple_local_avatar,name');
+            let fetchedImageLists = await wps.forceGet('users?roles=momotaro&_field=id,simple_local_avatar,name');
             setImageLists(fetchedImageLists);
 
             handleProcess((100/3),"ニュースを読み込んでいます。");
@@ -82,7 +82,7 @@ const IndexPageContainer: React.FC = () => {
             handleProcess((100/3),"ブログを読み込んでいます。");
 
             // 3
-            let blog = await wps.get('blog?per_page=24&_embed');
+            let blog = await wps.forceGet('blog?per_page=24&_embed');
             if (blog) {
                 setMjBlogs(blog);
             }
